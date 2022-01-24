@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Author: peir.kern.chuah@intel.com<PK>
+# Version: 1.0
+# Date: 20211114
+#
+
+. /usr/share/fog/lib/funcs.sh
+
+echo $hostname
+echo $osid
+
+# filter linux OS only: osid=50
+case $osid in
+    50)
+	# listing environment variables
+	echo "printenv"
+	printenv
+		
+	# Notes:
+	# Current script having assumption on single OS image capturing and deployment.
+	# e.g.
+	# /dev/nvme0n1p1 -> /boot/efi
+	# /dev/nvme0n1p2 -> /
+	# 
+	# Enhancement needed for this script to handle multiple OSs scenario, to target partition on the hostname change.
+	# e.g. /dev/nvme0n1p2/etc/hostname change by $imageid or %imagename
+
+	# access harddisk
+	getHardDisk
+	if [[ -z $hd ]]; then
+            handleError "Could not find hdd to use"
+        fi
+	# get all partitions from harddisk
+        getPartitions $hd
+	INDEX=0
+        for part in $parts; do
+		echo ${INDEX}
+		echo $part
+		mkdir /tmpdrive${INDEX}
+		mount $part /tmpdrive${INDEX}
+		if [ -f /tmpdrive${INDEX}/etc/hostname ]; then
+			echo "/etc/hostname exists. Replacing.."
+			echo $hostname
+			echo $hostname >tmpdrive${INDEX}/etc/hostname
+		else 
+			echo "/etc/hostname does not exist."
+		fi
+		let INDEX=${INDEX}+1
+		umount $part
+	done
+	echo "fog.renamehost completed."
+	
+	# enable sleep for debug
+	#sleep 10
+	;;
+esac
+
