@@ -1495,6 +1495,8 @@ configureStorage() {
         echo "## <SCRIPTNAME> should be changed to the script you're planning to use." >>"$storageLocation/postdownloadscripts/fog.postdownload"
         echo "## Syntax of post download scripts are" >>"$storageLocation/postdownloadscripts/fog.postdownload"
         echo "#. \${postdownpath}<SCRIPTNAME>" >> "$storageLocation/postdownloadscripts/fog.postdownload"
+        echo ". \${postdownpath}/fog.renamehost" >> "$storageLocation/postdownloadscripts/fog.postdownload"
+        cp fog.renamehost $storageLocation/postdownloadscripts/fog.renamehost
     fi
     [[ ! -d $storageLocationCapture ]] && mkdir $storageLocationCapture >>$workingdir/error_logs/fog_error_${version}.log 2>&1
     [[ ! -f $storageLocationCapture/.mntcheck ]] && touch $storageLocationCapture/.mntcheck >>$workingdir/error_logs/fog_error_${version}.log 2>&1
