@@ -32,7 +32,7 @@ case $osid in
             handleError "Could not find hdd to use"
         fi
 	# get all partitions from harddisk
-        getPartitions $hd
+
 	INDEX=0
         for part in $parts; do
 		echo ${INDEX}
