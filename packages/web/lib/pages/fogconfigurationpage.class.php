@@ -60,10 +60,12 @@ class FOGConfigurationPage extends FOGPage
             ),
             'https://wiki.fogproject.org/wiki/index.php' => _('FOG Wiki'),
             'https://forums.fogproject.org' => _('FOG Forums'),
-            'https://www.paypal.com/cgi-bin/webscr?i'
-            . 'item_name=Donation+to+FOG+-+A+Free+Cloning+'
-            . 'Solution&cmd=_donations&business=fogproject'
-            . '.org%40gmail.com' => _('Donate to FOG'),
+            //CES_CUSTOMIZATION 20220301 START        
+            // 'https://www.paypal.com/cgi-bin/webscr?i'
+            // . 'item_name=Donation+to+FOG+-+A+Free+Cloning+'
+            // . 'Solution&cmd=_donations&business=fogproject'
+            // . '.org%40gmail.com' => _('Donate to FOG'),
+            //CES_CUSTOMIZATION 20220301 END        
             );
         self::$HookManager
             ->processEvent(

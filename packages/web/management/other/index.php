@@ -67,7 +67,10 @@ if (self::$FOGUser->isValid()) {
     echo '<div class="collapse navbar-collapse">';
     echo '<ul class="nav navbar-nav">';
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
-    echo '<b>FOG</b> Project';
+    //CES_CUSTOMIZATION 20220301 START        
+    //echo '<b>FOG</b> Project';
+    echo _('FOG Project');
+    //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     self::getSearchForm();
     echo $this->menu;
@@ -139,7 +142,10 @@ if (self::$FOGUser->isValid()) {
     echo '<div class="collapse navbar-collapse">';
     echo '<ul class="nav navbar-nav">';
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
-    echo '<b>FOG</b> Project';
+    //CES_CUSTOMIZATION 20220301 START        
+    //echo '<b>FOG</b> Project';
+    echo _('FOG Project');
+    //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     echo '</ul>';
     echo '</div>';
@@ -169,11 +175,13 @@ echo '<li><a href="https://wiki.fogproject.org/wiki/index.php?title=Credits">'
 echo '<li><a href="?node=client">'
     . _('FOG Client')
     . '</a></li>';
-echo '<li><a href="https://www.paypal.com/cgi-bin/webscr?item_name=Donation'
-    . '+to+FOG+-+A+Free+Cloning+Solution&cmd=_donations&business=fogproject.org'
-    . '@gmail.com" target="_blank">'
-    . _('Donate to FOG')
-    . '</a></li>';
+//CES_CUSTOMIZATION 20220301 START        
+// echo '<li><a href="https://www.paypal.com/cgi-bin/webscr?item_name=Donation'
+//     . '+to+FOG+-+A+Free+Cloning+Solution&cmd=_donations&business=fogproject.org'
+//     . '@gmail.com" target="_blank">'
+//     . _('Donate to FOG')
+//     . '</a></li>';
+//CES_CUSTOMIZATION 20220301 END        
 if (self::$FOGUser->isValid()) {
     echo '<li class="pull-right">';
     echo '<a href="../management/index.php?node=about">';
