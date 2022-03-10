@@ -1357,6 +1357,7 @@ $this->schema[] = array(
     . "Windows user password that may have been lost or "
     . "forgotten.', 'winpass.png', '', 'mode=winpassreset', "
     . "'fog', '1', 'both'),"
+    /* //CES_CUSTOMIZATION 20220302 (hide advance menu)
     . "(12, 'All Snapins', 'This option allows you to send all "
     . "the snapins to host without imaging the computer. "
     . "(Requires FOG Client to be installed on client)', "
@@ -1370,6 +1371,7 @@ $this->schema[] = array(
     . "typically need to configure your hardware to "
     . "allow for this (iphelper).', 'wake.png', '', '', "
     . "'fog', '1', 'both'),"
+    */
     . "(15, 'Deploy - Debug', 'Deploy - Debug mode allows "
     . "FOG to setup the environment to allow you send a "
     . "specific image to a computer, but instead of "
@@ -1386,11 +1388,13 @@ $this->schema[] = array(
     . "need to do is type \"fog\" and hit enter.', "
     . "'restoredebug.png', '', 'type=up mode=debug', "
     . "'fog', '1', 'host'),"
+    /* //CES_CUSTOMIZATION 20220302 (hide advance menu)
     . "(17, 'Deploy without Snapins', 'Deploy without snapins "
     . "allows FOG to image the workstation, but after the task "
     . "is complete any snapins linked to the host or group will "
     . "NOT be sent.', 'sendnosnapin.png', '', '', 'fog', '1', "
     . "'both'),"
+    */
     . "(18, 'Fast Wipe', 'Full Wipe will boot the client "
     . "computer and perform a full disk wipe. This method "
     . "writes a few passes of random data to the hard disk.',"
@@ -1405,7 +1409,8 @@ $this->schema[] = array(
     . "computer and perform a full disk wipe. This method "
     . "writes a few passes of random data to the hard disk.',"
     . "'fullwipe.png', '', 'mode=wipe wipemode=full', 'fog',"
-    . "'1', 'both'),"
+    . "'1', 'both')"
+    /* //CES_CUSTOMIZATION 20220302 (hide advance menu)
     . "(21, 'Virus Scan', 'Anti-Virus loads Clam AV on the "
     . "client boot image, updates the scanner and then scans "
     . "the Windows partition.', 'clam.png', '', 'mode=clamav "
@@ -1414,6 +1419,7 @@ $this->schema[] = array(
     . "AV on the client boot image, updates the scanner and "
     . "then scans the Windows partition.', 'clam.png', '', "
     . "'mode=clamav avmode=q', 'fog', '1', 'both')"
+    */
 );
 // 34
 $this->schema[] = array(

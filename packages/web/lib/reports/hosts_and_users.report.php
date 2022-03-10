@@ -21,7 +21,7 @@ class Hosts_And_Users extends ReportManagementPage
 
     public function file()
     {
-        $this->title = _('FOG Host and Users - Search');
+        $this->title = _('FOG Host and Users') .'- ' . _('Search'); 
         unset(
                 $this->data,
                 $this->form,

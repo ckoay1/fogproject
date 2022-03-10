@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-10 16:23+0100\n"
-"PO-Revision-Date: 2022-03-10 16:16+0800\n"
+"PO-Revision-Date: 2022-03-03 15:59+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -94,13 +94,10 @@ msgid "Logout"
 msgstr "Logout"
 
 msgid "Host"
-msgstr "Node"
+msgstr "Host"
 
 msgid "Hosts"
-msgstr "Nodes"
-
-msgid "host"
-msgstr "node"
+msgstr "Hosts"
 
 msgid "Bandwidth"
 msgstr "Bandwidth"
@@ -154,7 +151,7 @@ msgid "Advanced"
 msgstr "Advanced"
 
 msgid "Hostname"
-msgstr "Nodename"
+msgstr "Hostname"
 
 msgid "IP"
 msgstr "IP"
@@ -309,7 +306,7 @@ msgid "Settings"
 msgstr "Settings"
 
 msgid "FOG"
-msgstr "PXEL"
+msgstr "FOG"
 
 msgid "Active"
 msgstr "Active"
@@ -513,10 +510,7 @@ msgid "%s is required"
 msgstr "%s is required"
 
 msgid "Host Management"
-msgstr "Node Management"
-
-msgid "Host Management Edit"
-msgstr "Node Management Edit"
+msgstr "Host Management"
 
 msgid "Storage Management"
 msgstr "Storage Management"
@@ -589,10 +583,10 @@ msgid "Not Available"
 msgstr "Not Available"
 
 msgid "Export Hosts"
-msgstr "Export Nodes"
+msgstr "Export Hosts"
 
 msgid "Import Hosts"
-msgstr "Import Nodes"
+msgstr "Import Hosts"
 
 msgid "Export Users"
 msgstr "Export Users"
@@ -628,7 +622,7 @@ msgid "Equipment Loan"
 msgstr "Equipment Loan"
 
 msgid "Host List"
-msgstr "Node List"
+msgstr "Host List"
 
 msgid "Imaging Log"
 msgstr "Imaging Log"
@@ -689,7 +683,7 @@ msgid "Registered Hosts"
 msgstr "Registered Hosts"
 
 msgid "All Hosts"
-msgstr "All Nodes"
+msgstr "All Hosts"
 
 msgid "Debug Options"
 msgstr "Debug Options"
@@ -1344,7 +1338,7 @@ msgid "Location/Deployed"
 msgstr "Location/Deployed"
 
 msgid "Host Product Key"
-msgstr "Node Product Key"
+msgstr "Host Product Key"
 
 msgid "Host Location"
 msgstr "Host Location"
@@ -1588,17 +1582,19 @@ msgid "Site Update Fail"
 msgstr "Printer update failed!"
 
 msgid "Host Name"
-msgstr "Node Name"
+msgstr "Host Name"
 
 #, fuzzy
 msgid "Host Membership"
 msgstr "Membership"
 
+#, fuzzy
 msgid "Check here to see what hosts can be added"
-msgstr "Check here to see what nodes can be added"
+msgstr "Check here to see what printers can be added"
 
+#, fuzzy
 msgid "Add Hosts"
-msgstr "Add Hosts"
+msgstr "All Hosts"
 
 #, fuzzy
 msgid "Add selected hosts"
@@ -2660,7 +2656,7 @@ msgid "Host AD Domain"
 msgstr "AD Domain"
 
 msgid "Host Kernel"
-msgstr "Node Kernel"
+msgstr "Host Kernel"
 
 #, fuzzy
 msgid "Host HD Device"
@@ -2769,7 +2765,7 @@ msgid "FOG User tracking history"
 msgstr "FOG User Login History Summary"
 
 msgid "Host Description"
-msgstr "Node Description"
+msgstr "Host Description"
 
 #, fuzzy
 msgid "Service Start"
@@ -3119,7 +3115,7 @@ msgid "FOG Wiki"
 msgstr "FOG Wiki"
 
 msgid "FOG Version Information"
-msgstr "PXEL Version Information"
+msgstr "FOG Version Information"
 
 msgid "Kernel Versions"
 msgstr "Kernel Versions"
@@ -3818,7 +3814,7 @@ msgid "Started By:"
 msgstr "Started By:"
 
 msgid "Working with node"
-msgstr "Working with storage node"
+msgstr ""
 
 msgid "Edit Host"
 msgstr "Edit Host"
@@ -3920,6 +3916,9 @@ msgstr "Delayed"
 msgid "group"
 msgstr "group"
 
+msgid "host"
+msgstr "host"
+
 msgid "Imaged"
 msgstr "Imaged"
 
@@ -3954,28 +3953,29 @@ msgid "Selected hosts deleted successfully"
 msgstr "Install / Update Successful!"
 
 msgid "New Host"
-msgstr "New Node"
+msgstr "New Host"
 
 msgid "Primary MAC"
 msgstr "Primary MAC"
 
 msgid "Host Image"
-msgstr "Node Image"
+msgstr "Host Image"
 
 msgid "Host Kernel Arguments"
-msgstr "Node Kernel Arguments"
+msgstr "Host Kernel Arguments"
 
+#, fuzzy
 msgid "Host Init"
-msgstr "Node Init"
+msgstr "Host List"
 
 msgid "Host Primary Disk"
-msgstr "Node Primary Disk"
+msgstr "Host Primary Disk"
 
 msgid "Host Bios Exit Type"
-msgstr "Node Bios Exit Type"
+msgstr "Host Bios Exit Type"
 
 msgid "Host EFI Exit Type"
-msgstr "Node EFI Exit Type"
+msgstr "Host EFI Exit Type"
 
 #, fuzzy
 msgid "A host name is required!"
@@ -3985,27 +3985,32 @@ msgstr "An image name is required!"
 msgid "A mac address is required!"
 msgstr "MAC Address is required"
 
+#, fuzzy
 msgid "A host already exists with this name!"
-msgstr "A node already exists with this name!"
+msgstr "An image already exists with this name!"
 
 msgid "MAC Format is invalid"
 msgstr "MAC Format is invalid"
 
+#, fuzzy
 msgid "A host with this mac already exists with name"
-msgstr "A node with this MAC already exists with Nodename: "
+msgstr "A host with this MAC already exists with Hostname: %s"
 
 #, fuzzy
 msgid "Add host failed!"
 msgstr "Add snapin failed!"
 
+#, fuzzy
 msgid "Host added!"
-msgstr "Node added"
+msgstr "Host added"
 
+#, fuzzy
 msgid "Host Create Success"
-msgstr "Node Create Success"
+msgstr "Host Created"
 
+#, fuzzy
 msgid "Host Create Fail"
-msgstr "Node create failed"
+msgstr "Host create failed"
 
 msgid "Cron Schedule"
 msgstr "Cron Schedule"
@@ -4063,8 +4068,9 @@ msgstr "Host Description"
 msgid "Reset Encryption Data"
 msgstr ""
 
+#, fuzzy
 msgid "Host general"
-msgstr "Node general"
+msgstr "Host Kernel"
 
 msgid "Please enter a hostname"
 msgstr "Please enter a hostname"
@@ -6339,8 +6345,9 @@ msgstr ""
 msgid "Attempting to ping"
 msgstr "Attempting to ping"
 
+#, fuzzy
 msgid "hosts"
-msgstr "node"
+msgstr "host"
 
 #, fuzzy
 msgid " * Snapin hash is globally disabled"
@@ -7135,8 +7142,9 @@ msgstr "Invalid token passed"
 msgid "One or more macs are associated with a host"
 msgstr "Error, Is an image associated with this host"
 
+#, fuzzy
 msgid "This host already exists"
-msgstr "This node already exists"
+msgstr "Printer already exists"
 
 msgid "Results"
 msgstr "Results"
@@ -7495,7 +7503,7 @@ msgid "FOG History"
 msgstr "PXEL History"
 
 msgid "FOG Host"
-msgstr "PXEL Node"
+msgstr "PXEL Host"
 
 msgid "FOG Host and Users"
 msgstr "PXEL Host and Users"
@@ -7504,16 +7512,5 @@ msgid "FOG Imaging"
 msgstr "PXEL Imaging"
 
 msgid "FOG Host Inventory"
-msgstr "PXEL Node Inventory"
+msgstr "PXEL Host Inventory"
 
-msgid "List All Hosts"
-msgstr "List All Nodes"
-
-msgid "Create New Host"
-msgstr "Create New Node"
-
-msgid "Hosts And Users"
-msgstr "Nodes And Users"
-
-msgid "Hostname MAC"
-msgstr "Nodename MAC"

@@ -29,8 +29,8 @@ class Host_List extends ReportManagementPage
      */
 
     public function file()
-    {
-        $this->title = _('FOG Host - Search');
+    { 
+        $this->title = _('FOG Host') .'- ' . _('Search');
         unset(
                 $this->data,
                 $this->form,

@@ -1110,7 +1110,7 @@ class HostManagementPage extends FOGPage
             . $pending
             . '</div>',
             '<label for="description">'
-            . _('Host description')
+            . _('Host Description')
             . '</label>' => '<div class="input-group">'
             . '<textarea class="form-control" id="description" '
             . 'name="description">'

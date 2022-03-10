@@ -537,7 +537,7 @@ class Page extends FOGBase
         foreach ($class->menu as $l => &$t) {
             $FOGSub->addMainItems(
                 $class->node,
-                array((string)$t => (string)$l),
+                array((string)($t == "" ? $t : _($t)) => (string)$l), //CES_CUSTOMIZATION 20220302 (localized submenu)
                 '',
                 '',
                 'mainmenu'

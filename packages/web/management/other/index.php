@@ -67,9 +67,9 @@ if (self::$FOGUser->isValid()) {
     echo '<div class="collapse navbar-collapse">';
     echo '<ul class="nav navbar-nav">';
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
-    //CES_CUSTOMIZATION 20220301 START        
+    //CES_CUSTOMIZATION 20220301 START  
     //echo '<b>FOG</b> Project';
-    echo _('FOG Project');
+    echo '<b>' ._('FOG Project') . '</b> (' .FOG_VERSION_CES .')';
     //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     self::getSearchForm();
@@ -98,10 +98,16 @@ if (self::$FOGUser->isValid()) {
             ''
         )
         . '">';
+
+    //CES_CUSTOMIZATION 20220302 START localized edit mode with :
+    if(strpos($this->sectionTitle,":") == true)
+        $this->sectionTitle = _(substr($this->sectionTitle,0,strpos($this->sectionTitle,":"))) .substr($this->sectionTitle,strpos($this->sectionTitle,":"));
+    //CES_CUSTOMIZATION 20220302 END localized
+
     echo '<div class="panel panel-primary">';
     echo '<div class="panel-heading text-center">';
     echo '<h4 class="title">'
-        . $this->sectionTitle
+        . _($this->sectionTitle)
         . '</h4>';
     if (self::$FOGUser->isValid && $this->pageTitle) {
         echo '<h5 class="title">'
@@ -164,7 +170,8 @@ if (self::$FOGUser->isValid()) {
     echo $this->body;
     echo '</div>';
 }
-echo '<div class="collapse navbar-collapse">';
+     
+echo '<div class="collapse navbar-collapse" style="visibility:hidden;display:none" >'; //CES_CUSTOMIZATION 20220301 (Hide footer)   
 echo '<footer class="footer">';
 echo '<nav class="navbar navbar-inverse navbar-fixed-bottom">';
 echo '<div class="container-fluid">';
@@ -175,26 +182,18 @@ echo '<li><a href="https://wiki.fogproject.org/wiki/index.php?title=Credits">'
 echo '<li><a href="?node=client">'
     . _('FOG Client')
     . '</a></li>';
-//CES_CUSTOMIZATION 20220301 START        
-// echo '<li><a href="https://www.paypal.com/cgi-bin/webscr?item_name=Donation'
-//     . '+to+FOG+-+A+Free+Cloning+Solution&cmd=_donations&business=fogproject.org'
-//     . '@gmail.com" target="_blank">'
-//     . _('Donate to FOG')
-//     . '</a></li>';
-//CES_CUSTOMIZATION 20220301 END        
+echo '<li><a href="https://www.paypal.com/cgi-bin/webscr?item_name=Donation'
+    . '+to+FOG+-+A+Free+Cloning+Solution&cmd=_donations&business=fogproject.org'
+    . '@gmail.com" target="_blank">'
+    . _('Donate to FOG')
+    . '</a></li>';
 if (self::$FOGUser->isValid()) {
     echo '<li class="pull-right">';
     echo '<a href="../management/index.php?node=about">';
-    //CES_CUSTOMIZATION 20220131 START        
     echo '<b>';
-    echo _('iVE VCS CES Version');
+    echo _('Version');
     echo '</b> ';
-    echo FOG_VERSION_CES;
-    //echo '<b>';
-    //echo _('Version');
-    //echo '</b> ';
-    //echo FOG_VERSION;
-    //CES_CUSTOMIZATION 20220131 END        
+    echo FOG_VERSION;
     echo '</a>';
     echo '</li>';
 }
@@ -203,6 +202,8 @@ echo '</div>';
 echo '</nav>';
 echo '</footer>';
 echo '</div>';
+
+
 foreach ((array)$this->javascripts as &$javascript) {
     echo '<script src="'
         . $javascript

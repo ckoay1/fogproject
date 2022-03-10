@@ -23,7 +23,7 @@ class History_Report extends ReportManagementPage
 {
     public function file()
     {
-        $this->title = _('FOG History - Search');
+        $this->title = _('FOG History') .'- ' . _('Search');
         unset(
             $this->data,
             $this->form,

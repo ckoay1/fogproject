@@ -1,0 +1,317 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.logoimg {
+    position: relative;
+    top: -7px;
+    height: 35px;
+    width: 35px;
+}
+#login-history,
+.fogdashbox {
+    min-width: 200px;
+    max-width: 90%;
+    min-height: 125px;
+    max-height: 300px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+.select2-container,
+.input-group {
+    width: 100% !important;
+}
+.form-signin {
+    margin: auto;
+    max-width: 500px;
+    padding: 15px 35px 0 35px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+    .form-control {
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        @include box-sizing(border-box);
+        &:focus {
+            z-index: 2;
+        }
+    }
+    input[type="text"] {
+        margin-bottom: 1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    input[type="password"] {
+        margin-bottom: 20px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+#login-form-info b {
+    float: right;
+    color: #00567A;
+}
+.graph-filters {
+    margin-left: 10px;
+    color: #00567a;
+    font-weight: bold;
+}
+.graph-filters.active,
+.graph-filters:hover {
+    color: #0799ce;
+}
+table td {
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+.table-responsive > tbody > tr > td {
+    vertical-align: middle;
+}
+.fakes {
+    display: none;
+}
+.sidenotes {
+    padding: 10px;
+    margin: 10px;
+}
+#login-history {
+    width: 600px;
+}
+.form-signin .select2-container {
+    max-width: 100% !important;
+}
+.action-boxes {
+    display: none;
+}
+.additionalMACsRow,
+.pendingMACsRow {
+    display: none;
+}
+.hidefirst,
+.hiddeninitially {
+    display: none;
+}
+.advanced-tasks {
+    display: none;
+}
+.red {
+    color: #ce0f0f;
+}
+.green {
+    color: #18f008;
+}
+.tablesorter-filter.disabled {
+    display: none;
+}
+.showVal {
+    position: relative;
+    top: 0;
+    right: 0;
+    min-width: 0;
+    width: 40px;
+}
+.version-info {
+    color: white;
+    font-size: 9px;
+    padding-top: 5px;
+}
+.input-group-addon {
+    min-width: 50px;
+}
+.hand {
+    cursor: pointer;
+}
+input[type=radio].default {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+/**
+ * Default printer information.
+ * Radio button as circle/checks
+ */
+input[type=radio].default {
+    display: none;
+}
+input[type=radio].default + label {
+    display: block;
+}
+input[type=radio].default + label:before {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding:right: 8px;
+    width: 23px;
+}
+input[type=radio].default + label:before {
+    content: "\f10c";
+}
+input[type=radio].default:checked + label:before {
+    content: "\f05d";
+}
+/**
+ * Virus checkbox thing.
+ */
+input[type=checkbox].delvid {
+    display: none;
+}
+input[type=checkbox].delvid + label {
+    display: block;
+}
+input[type=checkbox].delvid + label:before {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-right: 8px;
+    width: 23px;
+    color: red;
+}
+input[type=checkbox].delvid + label:before {
+    content: "\f10c";
+}
+input[type=checkbox].delvid:checked + label:before {
+    content: "\f05d";
+}
+@media (min-width: 768px) {
+    .collapsedmenu-text {
+        display: none;
+    }
+}
+/**
+ * Task Progress/Active
+ */
+.progress ul {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    height: 17px;
+    /*display: block;*/
+    cursor: default;
+}
+.progress ul:hover {
+    display: block;
+}
+.progress ul li {
+    float: left;
+    width: 33%;
+    display: block;
+    height: 18px;
+}
+
+.icon.fa.fa-download {
+  color: #7baa0f
+}
+.icon.fa.fa-upload {
+  color: #ff9c07
+}
+@media (min-width: 768px) {
+    .navbar-nav {
+        width: 100%;
+        text-align: center;
+        > li {
+            float: none;
+            display: inline-block;
+        }
+    }
+}
+
+/*******CES Customized Theme Start ********/
+/*Header Title*/
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+	background-image: -webkit-linear-gradient(top,#337ab7 0,#2e6da4 100%);
+    background-image: -o-linear-gradient(top,#337ab7 0,#2e6da4 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#337ab7),to(#2e6da4));
+    background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff2e6da4', GradientType=0);
+    background-repeat: repeat-x;
+}
+
+
+/*Header Title Body Border*/
+.panel-primary {
+    border-color: #337ab7;
+}
+
+/*Sub Title*/
+.panel-info>.panel-heading {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+	background-image: -webkit-linear-gradient(top,#d9edf7 0,#c4e3f3 100%);
+    background-image: -o-linear-gradient(top,#d9edf7 0,#c4e3f3 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#d9edf7),to(#c4e3f3));
+    background-image: linear-gradient(to bottom,#d9edf7 0,#c4e3f3 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9edf7', endColorstr='#ffc4e3f3', GradientType=0);
+    background-repeat: repeat-x;
+}
+
+
+/*Sub Title Wording*/
+.panel-info {
+    border-color: #bce8f1;
+}
+
+/*Link Wording */
+a {
+    color: #337ab7;
+}
+
+/*Header & Footer Background */
+.navbar-inverse {
+    background-image: -webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
+    background-image: -o-linear-gradient(top,#3c3c3c 0,#222 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#222));
+    background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-radius: 4px;
+}
+
+.btn-info {
+    background-image: -webkit-linear-gradient(top,#5bc0de 0,#2aabd2 100%);
+    background-image: -o-linear-gradient(top,#5bc0de 0,#2aabd2 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#5bc0de),to(#2aabd2));
+    background-image: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2aabd2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #28a4c9;
+}
+
+/*this color need to close to existing button color*/
+.btn-info:focus, .btn-info:hover {
+    background-color: #2aabd2;
+	border-color: #1b6d85;
+}
+
+
+.btn-info:active{
+    background-image: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+	background-color: #5bc0de;
+    border-color: #1b6d85;
+}
+
+
+
+
+/*******CES Customized Theme END ********/

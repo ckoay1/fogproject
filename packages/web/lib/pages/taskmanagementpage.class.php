@@ -66,14 +66,15 @@ class TaskManagementPage extends FOGPage
             '<input type="checkbox" class="toggle-checkboxAction" id="toggler"/>'
             . '<label for="toggler"></label>',
             _('Started By:'),
-            sprintf(
+            /*sprintf(
                 '%s<br/><small>%s</small>',
                 _('Hostname'),
                 _('MAC')
-            ),
+            ),*/
+            _('Hostname MAC'), //CES_CUSTOMIZATION 20220302 remove css for localization
             _('Image Name'),
             _('Start Time'),
-            _('Working with node'),
+            _('Working with storage node'), //CES_CUSTOMIZATION 20220302 add "storage" to avoid confuse with node
             _('Status')
         );
         $this->templates = array(

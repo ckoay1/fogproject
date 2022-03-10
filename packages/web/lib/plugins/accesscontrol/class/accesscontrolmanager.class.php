@@ -86,8 +86,9 @@ class AccessControlManager extends FOGManagerController
         } else {
             $sql = sprintf(
                 "INSERT INTO `%s` VALUES"
-                . "(1, 'Administrator', 'FOG Administrator', 'fog', NOW()),"
-                . "(2, 'Technician', 'FOG Technician', 'fog', NOW())",
+                . "(1, 'Administrator', 'PXEL Administrator', 'fog', NOW()),"
+                . "(2, 'Technician', 'PXEL Technician', 'fog', NOW()),"
+                . "(3, 'LabUsers', 'Lab Users', 'fog', NOW())", //CES_CUSTOMIZATION 20220302 (new ces role for lab user)
                 $this->tablename
             );
             self::$DB->query($sql);
