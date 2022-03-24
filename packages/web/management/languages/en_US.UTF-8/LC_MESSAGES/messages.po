@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-10 16:23+0100\n"
-"PO-Revision-Date: 2022-03-10 16:16+0800\n"
+"PO-Revision-Date: 2022-03-23 21:04+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -887,9 +887,8 @@ msgstr ""
 msgid "which is empty"
 msgstr ""
 
-#, fuzzy
 msgid "to all nodes in the group"
-msgstr "Delete all hosts within group"
+msgstr "Delete all nodes within group"
 
 msgid "Storage Node already exists"
 msgstr "Storage Node already exists"
@@ -1600,17 +1599,15 @@ msgstr "Check here to see what nodes can be added"
 msgid "Add Hosts"
 msgstr "Add Hosts"
 
-#, fuzzy
 msgid "Add selected hosts"
-msgstr "Remove selected printers"
+msgstr "Add selected nodes"
 
 #, fuzzy
 msgid "Remove Hosts"
 msgstr "Remove"
 
-#, fuzzy
 msgid "Remove selected hosts"
-msgstr "Remove selected snapins"
+msgstr "Remove selected nodes"
 
 #, fuzzy
 msgid "Friendly Name"
@@ -2431,7 +2428,7 @@ msgid "Host ID"
 msgstr "Host ID"
 
 msgid "Host MAC"
-msgstr "Host MAC"
+msgstr "Node MAC"
 
 msgid "Snapin ID"
 msgstr "Snapin ID"
@@ -2499,7 +2496,7 @@ msgid "Pending MAC Export"
 msgstr "Pending MAC Export"
 
 msgid "Host name"
-msgstr "Host name"
+msgstr "Node name"
 
 msgid "Host Primary MAC"
 msgstr "Host Primary MAC"
@@ -2755,7 +2752,7 @@ msgid "Enter a username to search for"
 msgstr "Enter a username to search for"
 
 msgid "Enter a hostname to search for"
-msgstr "Enter a hostname to search for"
+msgstr "Enter a nodename to search for"
 
 msgid "Perform search"
 msgstr ""
@@ -2776,7 +2773,7 @@ msgid "Service Start"
 msgstr "Service Status"
 
 msgid "FOG Hosts and Users Login"
-msgstr "FOG Hosts and Users Login"
+msgstr "PXEL Nodes and Users Login"
 
 msgid "AD Join"
 msgstr "AD Join"
@@ -3933,9 +3930,8 @@ msgstr "Pending Host List"
 msgid "Approve selected hosts"
 msgstr "Approve selected Hosts"
 
-#, fuzzy
 msgid "Delete selected hosts"
-msgstr "Delete selected Hosts"
+msgstr "Delete selected nodes"
 
 #, fuzzy
 msgid "Approve Success"
@@ -7066,9 +7062,8 @@ msgstr "Load MAC Vendors"
 msgid "Not found"
 msgstr "Not found"
 
-#, fuzzy
 msgid "Delete hosts within"
-msgstr "Delete all hosts within group"
+msgstr "Delete all nodes within group"
 
 #, fuzzy
 msgid "Delete files"
@@ -7498,7 +7493,7 @@ msgid "FOG Host"
 msgstr "PXEL Node"
 
 msgid "FOG Host and Users"
-msgstr "PXEL Host and Users"
+msgstr "PXEL Node and Users"
 
 msgid "FOG Imaging"
 msgstr "PXEL Imaging"
@@ -7517,3 +7512,6 @@ msgstr "Nodes And Users"
 
 msgid "Hostname MAC"
 msgstr "Nodename MAC"
+
+msgid "Host Tasks"
+msgstr "Node Tasks"

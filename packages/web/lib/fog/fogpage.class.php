@@ -2145,7 +2145,7 @@ abstract class FOGPage extends FOGBase
             'task_name' => _('Advanced'),
             'task_desc' => _('View advanced tasks for this')
             . ' '
-            . $this->node
+            . _($this->node)
             . '.'
         );
         self::$HookManager->processEvent(
@@ -2167,7 +2167,7 @@ abstract class FOGPage extends FOGBase
         echo '<div class="panel panel-info">';
         echo '<div class="panel-heading text-center">';
         echo '<h4 class="title">';
-        echo $this->childClass;
+        echo _($this->childClass);
         echo ' ';
         echo _('Tasks');
         echo '</h4>';

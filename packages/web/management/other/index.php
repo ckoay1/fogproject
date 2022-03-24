@@ -46,12 +46,15 @@ foreach ((array)$this->stylesheets as &$stylesheet) {
 unset($this->stylesheets);
 echo '<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/>';
 echo '</head>';
-echo '<body>';
+echo '<body >';
 if (self::$FOGUser->isValid()) {
     /**
      * Navigation items
      */
-    echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    //CES_CUSTOMIZATION 20220323 START  
+    //echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    echo '<nav class="navbar navbar-fixed-top" style="background-color: #f8f8f8;border-color: #337AB7">';
+    //CES_CUSTOMIZATION 20220323 END        
     echo '<div class="container-fluid">';
     echo '<div class="navbar-header">';
     echo '<button type="button" class="navbar-toggle collapsed" data-toggle="'
@@ -69,7 +72,7 @@ if (self::$FOGUser->isValid()) {
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
     //CES_CUSTOMIZATION 20220301 START  
     //echo '<b>FOG</b> Project';
-    echo '<b>' ._('FOG Project') . '</b> (' .FOG_VERSION_CES .')';
+    echo '<p> <img style="width:40%;position:relative" src="../pxelhdr.png" class="logoimg" alt="'._('FOG Project') . '"/> ' . '(' .FOG_VERSION_CES .') </p>';
     //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     self::getSearchForm();
@@ -132,7 +135,10 @@ if (self::$FOGUser->isValid()) {
     echo '</div>';
     echo '</div>';
 } else {
-    echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    //CES_CUSTOMIZATION 20220323 START     
+    //echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    //echo '<nav class="navbar navbar-fixed-top" style="background-color: #f8f8f8;border-color: #337AB7">';
+    //CES_CUSTOMIZATION 20220323 END     
     echo '<div class="container-fluid">';
     echo '<div class="navbar-header">';
     echo '<button type="button" class="navbar-toggle collapsed" data-toggle="'
@@ -150,7 +156,8 @@ if (self::$FOGUser->isValid()) {
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
     //CES_CUSTOMIZATION 20220301 START        
     //echo '<b>FOG</b> Project';
-    echo _('FOG Project');
+    //echo _('FOG Project');
+    //echo '<p> <img style="width:100%;position:relative" src="../pxelhdr.png" class="logoimg" alt="'._('FOG Project') . '"/> </p>';
     //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     echo '</ul>';

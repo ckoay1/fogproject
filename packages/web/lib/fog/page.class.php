@@ -187,7 +187,13 @@ class Page extends FOGBase
                 'about' => array(
                     self::$foglang['FOG Configuration'],
                     'fa fa-wrench'
+                ),
+                //CES_CUSTOMIZATION 20220323 START  
+                'contactus' => array(
+                    self::$foglang['Contact Us'],
+                    'fa fa-info-circle'
                 )
+                //CES_CUSTOMIZATION 20220323 END  
             );
             if (self::getSetting('FOG_PLUGINSYS_ENABLED')) {
                 self::arrayInsertAfter(
@@ -457,7 +463,7 @@ class Page extends FOGBase
     public static function getSearchForm()
     {
         global $node;
-        echo '<div class="col-md-3">';
+        echo '<div class="col-md-2">';
         if (in_array($node, self::$searchPages)) {
             echo '<li class="pull-left">';
             echo '<form class="navbar-form navbar-left search-wrapper" role='

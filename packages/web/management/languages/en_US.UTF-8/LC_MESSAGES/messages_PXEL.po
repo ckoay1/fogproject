@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-10 16:23+0100\n"
-"PO-Revision-Date: 2022-03-03 15:59+0800\n"
+"PO-Revision-Date: 2022-03-23 20:29+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -94,10 +94,10 @@ msgid "Logout"
 msgstr "Logout"
 
 msgid "Host"
-msgstr "Host"
+msgstr "Node"
 
 msgid "Hosts"
-msgstr "Hosts"
+msgstr "Nodes"
 
 msgid "Bandwidth"
 msgstr "Bandwidth"
@@ -151,7 +151,7 @@ msgid "Advanced"
 msgstr "Advanced"
 
 msgid "Hostname"
-msgstr "Hostname"
+msgstr "Nodename"
 
 msgid "IP"
 msgstr "IP"
@@ -1338,7 +1338,7 @@ msgid "Location/Deployed"
 msgstr "Location/Deployed"
 
 msgid "Host Product Key"
-msgstr "Host Product Key"
+msgstr "Node Product Key"
 
 msgid "Host Location"
 msgstr "Host Location"
@@ -1582,7 +1582,7 @@ msgid "Site Update Fail"
 msgstr "Printer update failed!"
 
 msgid "Host Name"
-msgstr "Host Name"
+msgstr "Node Name"
 
 #, fuzzy
 msgid "Host Membership"
@@ -2427,7 +2427,7 @@ msgid "Host ID"
 msgstr "Host ID"
 
 msgid "Host MAC"
-msgstr "Host MAC"
+msgstr "Node MAC"
 
 msgid "Snapin ID"
 msgstr "Snapin ID"
@@ -2495,7 +2495,7 @@ msgid "Pending MAC Export"
 msgstr "Pending MAC Export"
 
 msgid "Host name"
-msgstr "Host name"
+msgstr "Node name"
 
 msgid "Host Primary MAC"
 msgstr "Host Primary MAC"
@@ -2656,7 +2656,7 @@ msgid "Host AD Domain"
 msgstr "AD Domain"
 
 msgid "Host Kernel"
-msgstr "Host Kernel"
+msgstr "Node Kernel"
 
 #, fuzzy
 msgid "Host HD Device"
@@ -2703,9 +2703,8 @@ msgstr "Deploy"
 msgid "Not Valid"
 msgstr "Invalid data"
 
-#, fuzzy
 msgid "Host Product Keys"
-msgstr "Host Product Key"
+msgstr "Node Product Key"
 
 msgid "FOG Virus Summary"
 msgstr "FOG Virus Summary"
@@ -2751,7 +2750,7 @@ msgid "Enter a username to search for"
 msgstr "Enter a username to search for"
 
 msgid "Enter a hostname to search for"
-msgstr "Enter a hostname to search for"
+msgstr "Enter a nodename to search for"
 
 msgid "Perform search"
 msgstr ""
@@ -2765,7 +2764,7 @@ msgid "FOG User tracking history"
 msgstr "FOG User Login History Summary"
 
 msgid "Host Description"
-msgstr "Host Description"
+msgstr "Node Description"
 
 #, fuzzy
 msgid "Service Start"
@@ -3959,35 +3958,31 @@ msgid "Primary MAC"
 msgstr "Primary MAC"
 
 msgid "Host Image"
-msgstr "Host Image"
+msgstr "Node Image"
 
 msgid "Host Kernel Arguments"
-msgstr "Host Kernel Arguments"
+msgstr "Node Kernel Arguments"
 
-#, fuzzy
 msgid "Host Init"
-msgstr "Host List"
+msgstr "Node List"
 
 msgid "Host Primary Disk"
-msgstr "Host Primary Disk"
+msgstr "Node Primary Disk"
 
 msgid "Host Bios Exit Type"
-msgstr "Host Bios Exit Type"
+msgstr "Node Bios Exit Type"
 
 msgid "Host EFI Exit Type"
-msgstr "Host EFI Exit Type"
+msgstr "Node EFI Exit Type"
 
-#, fuzzy
 msgid "A host name is required!"
 msgstr "An image name is required!"
 
-#, fuzzy
 msgid "A mac address is required!"
 msgstr "MAC Address is required"
 
-#, fuzzy
 msgid "A host already exists with this name!"
-msgstr "An image already exists with this name!"
+msgstr "An node already exists with this name!"
 
 msgid "MAC Format is invalid"
 msgstr "MAC Format is invalid"
@@ -7073,9 +7068,8 @@ msgstr "Load MAC Vendors"
 msgid "Not found"
 msgstr "Not found"
 
-#, fuzzy
 msgid "Delete hosts within"
-msgstr "Delete all hosts within group"
+msgstr "Delete nodes within"
 
 #, fuzzy
 msgid "Delete files"
@@ -7506,11 +7500,10 @@ msgid "FOG Host"
 msgstr "PXEL Host"
 
 msgid "FOG Host and Users"
-msgstr "PXEL Host and Users"
+msgstr "PXEL Node and Users"
 
 msgid "FOG Imaging"
 msgstr "PXEL Imaging"
 
 msgid "FOG Host Inventory"
-msgstr "PXEL Host Inventory"
-
+msgstr "PXEL Node Inventory"
