@@ -53,7 +53,12 @@ updateStorageNodeCredentials() {
     [[ -z $webroot ]] && webroot="/"
     dots "Ensuring node username and passwords match"
     curl -s -k -X POST -d "nodePass" -d "ip=$(echo -n $ipaddress|base64)" -d "user=$(echo -n $username|base64)" --data-urlencode "pass=$(echo -n $password|base64)" -d "fogverified" $httpproto://$ipaddress${webroot}maintenance/create_update_node.php
-    echo "Done"
+    echo "Done" 
+} 
+enableAccessControlPlugin() {
+    [[ -z $webroot ]] && webroot="/"
+    dots "Enabling Access Control Plugin"
+	curl -s -k -X POST $httpproto://$ipaddress${webroot}management/activatepluginrun.php?plugin=accesscontrol --stderr - | grep \[accesscontrol\]
 }
 backupDB() {
     dots "Backing up database"

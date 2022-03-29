@@ -189,8 +189,8 @@ class Page extends FOGBase
                     'fa fa-wrench'
                 ),
                 //CES_CUSTOMIZATION 20220323 START  
-                'contactus' => array(
-                    self::$foglang['Contact Us'],
+                'aboutus' => array(
+                    self::$foglang['About Us'],
                     'fa fa-info-circle'
                 )
                 //CES_CUSTOMIZATION 20220323 END  
