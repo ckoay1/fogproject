@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-10 16:23+0100\n"
-"PO-Revision-Date: 2022-03-23 21:04+0800\n"
+"PO-Revision-Date: 2022-03-23 20:29+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -98,9 +98,6 @@ msgstr "Node"
 
 msgid "Hosts"
 msgstr "Nodes"
-
-msgid "host"
-msgstr "node"
 
 msgid "Bandwidth"
 msgstr "Bandwidth"
@@ -309,7 +306,7 @@ msgid "Settings"
 msgstr "Settings"
 
 msgid "FOG"
-msgstr "PXEL"
+msgstr "FOG"
 
 msgid "Active"
 msgstr "Active"
@@ -513,10 +510,7 @@ msgid "%s is required"
 msgstr "%s is required"
 
 msgid "Host Management"
-msgstr "Node Management"
-
-msgid "Host Management Edit"
-msgstr "Node Management Edit"
+msgstr "Host Management"
 
 msgid "Storage Management"
 msgstr "Storage Management"
@@ -589,10 +583,10 @@ msgid "Not Available"
 msgstr "Not Available"
 
 msgid "Export Hosts"
-msgstr "Export Nodes"
+msgstr "Export Hosts"
 
 msgid "Import Hosts"
-msgstr "Import Nodes"
+msgstr "Import Hosts"
 
 msgid "Export Users"
 msgstr "Export Users"
@@ -628,7 +622,7 @@ msgid "Equipment Loan"
 msgstr "Equipment Loan"
 
 msgid "Host List"
-msgstr "Node List"
+msgstr "Host List"
 
 msgid "Imaging Log"
 msgstr "Imaging Log"
@@ -689,7 +683,7 @@ msgid "Registered Hosts"
 msgstr "Registered Hosts"
 
 msgid "All Hosts"
-msgstr "All Nodes"
+msgstr "All Hosts"
 
 msgid "Debug Options"
 msgstr "Debug Options"
@@ -887,8 +881,9 @@ msgstr ""
 msgid "which is empty"
 msgstr ""
 
+#, fuzzy
 msgid "to all nodes in the group"
-msgstr "Delete all nodes within group"
+msgstr "Delete all hosts within group"
 
 msgid "Storage Node already exists"
 msgstr "Storage Node already exists"
@@ -1593,21 +1588,25 @@ msgstr "Node Name"
 msgid "Host Membership"
 msgstr "Membership"
 
+#, fuzzy
 msgid "Check here to see what hosts can be added"
-msgstr "Check here to see what nodes can be added"
+msgstr "Check here to see what printers can be added"
 
+#, fuzzy
 msgid "Add Hosts"
-msgstr "Add Hosts"
+msgstr "All Hosts"
 
+#, fuzzy
 msgid "Add selected hosts"
-msgstr "Add selected nodes"
+msgstr "Remove selected printers"
 
 #, fuzzy
 msgid "Remove Hosts"
 msgstr "Remove"
 
+#, fuzzy
 msgid "Remove selected hosts"
-msgstr "Remove selected nodes"
+msgstr "Remove selected snapins"
 
 #, fuzzy
 msgid "Friendly Name"
@@ -2704,9 +2703,8 @@ msgstr "Deploy"
 msgid "Not Valid"
 msgstr "Invalid data"
 
-#, fuzzy
 msgid "Host Product Keys"
-msgstr "Host Product Key"
+msgstr "Node Product Key"
 
 msgid "FOG Virus Summary"
 msgstr "FOG Virus Summary"
@@ -2773,7 +2771,7 @@ msgid "Service Start"
 msgstr "Service Status"
 
 msgid "FOG Hosts and Users Login"
-msgstr "PXEL Nodes and Users Login"
+msgstr "FOG Hosts and Users Login"
 
 msgid "AD Join"
 msgstr "AD Join"
@@ -3116,7 +3114,7 @@ msgid "FOG Wiki"
 msgstr "FOG Wiki"
 
 msgid "FOG Version Information"
-msgstr "PXEL Version Information"
+msgstr "FOG Version Information"
 
 msgid "Kernel Versions"
 msgstr "Kernel Versions"
@@ -3815,7 +3813,7 @@ msgid "Started By:"
 msgstr "Started By:"
 
 msgid "Working with node"
-msgstr "Working with storage node"
+msgstr ""
 
 msgid "Edit Host"
 msgstr "Edit Host"
@@ -3917,6 +3915,9 @@ msgstr "Delayed"
 msgid "group"
 msgstr "group"
 
+msgid "host"
+msgstr "host"
+
 msgid "Imaged"
 msgstr "Imaged"
 
@@ -3930,8 +3931,9 @@ msgstr "Pending Host List"
 msgid "Approve selected hosts"
 msgstr "Approve selected Hosts"
 
+#, fuzzy
 msgid "Delete selected hosts"
-msgstr "Delete selected nodes"
+msgstr "Delete selected Hosts"
 
 #, fuzzy
 msgid "Approve Success"
@@ -3950,7 +3952,7 @@ msgid "Selected hosts deleted successfully"
 msgstr "Install / Update Successful!"
 
 msgid "New Host"
-msgstr "New Node"
+msgstr "New Host"
 
 msgid "Primary MAC"
 msgstr "Primary MAC"
@@ -3962,7 +3964,7 @@ msgid "Host Kernel Arguments"
 msgstr "Node Kernel Arguments"
 
 msgid "Host Init"
-msgstr "Node Init"
+msgstr "Node List"
 
 msgid "Host Primary Disk"
 msgstr "Node Primary Disk"
@@ -3973,35 +3975,37 @@ msgstr "Node Bios Exit Type"
 msgid "Host EFI Exit Type"
 msgstr "Node EFI Exit Type"
 
-#, fuzzy
 msgid "A host name is required!"
 msgstr "An image name is required!"
 
-#, fuzzy
 msgid "A mac address is required!"
 msgstr "MAC Address is required"
 
 msgid "A host already exists with this name!"
-msgstr "A node already exists with this name!"
+msgstr "An node already exists with this name!"
 
 msgid "MAC Format is invalid"
 msgstr "MAC Format is invalid"
 
+#, fuzzy
 msgid "A host with this mac already exists with name"
-msgstr "A node with this MAC already exists with Nodename: "
+msgstr "A host with this MAC already exists with Hostname: %s"
 
 #, fuzzy
 msgid "Add host failed!"
 msgstr "Add snapin failed!"
 
+#, fuzzy
 msgid "Host added!"
-msgstr "Node added"
+msgstr "Host added"
 
+#, fuzzy
 msgid "Host Create Success"
-msgstr "Node Create Success"
+msgstr "Host Created"
 
+#, fuzzy
 msgid "Host Create Fail"
-msgstr "Node create failed"
+msgstr "Host create failed"
 
 msgid "Cron Schedule"
 msgstr "Cron Schedule"
@@ -4059,8 +4063,9 @@ msgstr "Host Description"
 msgid "Reset Encryption Data"
 msgstr ""
 
+#, fuzzy
 msgid "Host general"
-msgstr "Node general"
+msgstr "Host Kernel"
 
 msgid "Please enter a hostname"
 msgstr "Please enter a hostname"
@@ -6335,8 +6340,9 @@ msgstr ""
 msgid "Attempting to ping"
 msgstr "Attempting to ping"
 
+#, fuzzy
 msgid "hosts"
-msgstr "node"
+msgstr "host"
 
 #, fuzzy
 msgid " * Snapin hash is globally disabled"
@@ -7063,7 +7069,7 @@ msgid "Not found"
 msgstr "Not found"
 
 msgid "Delete hosts within"
-msgstr "Delete all nodes within group"
+msgstr "Delete nodes within"
 
 #, fuzzy
 msgid "Delete files"
@@ -7130,8 +7136,9 @@ msgstr "Invalid token passed"
 msgid "One or more macs are associated with a host"
 msgstr "Error, Is an image associated with this host"
 
+#, fuzzy
 msgid "This host already exists"
-msgstr "This node already exists"
+msgstr "Printer already exists"
 
 msgid "Results"
 msgstr "Results"
@@ -7490,7 +7497,7 @@ msgid "FOG History"
 msgstr "PXEL History"
 
 msgid "FOG Host"
-msgstr "PXEL Node"
+msgstr "PXEL Host"
 
 msgid "FOG Host and Users"
 msgstr "PXEL Node and Users"
@@ -7500,18 +7507,3 @@ msgstr "PXEL Imaging"
 
 msgid "FOG Host Inventory"
 msgstr "PXEL Node Inventory"
-
-msgid "List All Hosts"
-msgstr "List All Nodes"
-
-msgid "Create New Host"
-msgstr "Create New Node"
-
-msgid "Hosts And Users"
-msgstr "Nodes And Users"
-
-msgid "Hostname MAC"
-msgstr "Nodename MAC"
-
-msgid "Host Tasks"
-msgstr "Node Tasks"

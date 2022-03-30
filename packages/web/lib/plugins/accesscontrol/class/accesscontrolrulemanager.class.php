@@ -57,7 +57,7 @@ class AccessControlRuleManager extends FOGManagerController
                 'INTEGER',
                 'VARCHAR(40)',
                 'VARCHAR(40)',
-                'VARCHAR(40)',
+                'VARCHAR(100)',  //CES_CUSTOMIZATION 20220302 START (Increase ruleValue cater sub page)
                 'VARCHAR(40)',
                 'VARCHAR(40)',
                 'TIMESTAMP',
@@ -170,7 +170,90 @@ class AccessControlRuleManager extends FOGManagerController
             . '(38, "SUB_MENULINK-logviewer", "SUB_MENULINK", '
             . '"logviewer", "menu", "fog", NOW(), "about"), '
             . '(39, "SUB_MENULINK-config", "SUB_MENULINK", '
-            . '"config", "menu", "fog", NOW(), "about")';
+            . '"config", "menu", "fog", NOW(), "about"), '
+            //CES_CUSTOMIZATION 20220302 START (CES Rules)
+            //host sub tabs(13)
+            . '(40, "SUB_MENULINK-host-tasks", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-tasks", "submenu", "fog", NOW(), "host"), '
+            . '(41, "SUB_MENULINK-host-active-directory", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-active-directory", "submenu", "fog", NOW(), "host"), '
+            . '(42, "SUB_MENULINK-host-printers", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-printers", "submenu", "fog", NOW(), "host"), '
+            . '(43, "SUB_MENULINK-host-snapins", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-snapins", "submenu", "fog", NOW(), "host"), '
+            . '(44, "SUB_MENULINK-host-service", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-service", "submenu", "fog", NOW(), "host"), '
+            . '(45, "SUB_MENULINK-host-powermanagement", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-powermanagement", "submenu", "fog", NOW(), "host"), '
+            . '(46, "SUB_MENULINK-host-hardware-inventory", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-hardware-inventory", "submenu", "fog", NOW(), "host"), '
+            . '(47, "SUB_MENULINK-host-virus-history", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-virus-history", "submenu", "fog", NOW(), "host"), '
+            . '(48, "SUB_MENULINK-host-login-history", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-login-history", "submenu", "fog", NOW(), "host"), '
+            . '(49, "SUB_MENULINK-host-image-history", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-image-history", "submenu", "fog", NOW(), "host"), '
+            . '(50, "SUB_MENULINK-host-snapin-history", "SUB_MENULINK", '
+            . '"?node=host&sub=edit&id=#host-snapin-history", "submenu", "fog", NOW(), "host"), '
+            . '(51, "SUB_MENULINK-membership", "SUB_MENULINK", '
+            . '"?node=host&sub=membership&id=", "submenu", "fog", NOW(), "host"), '
+            . '(52, "SUB_MENULINK-delete", "SUB_MENULINK", '
+            . '"?node=host&sub=delete&id=", "submenu", "fog", NOW(), "host"), '
+            
+            //reports(12)
+            . '(53, "SUB_MENULINK-equipment_loan", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=equipment loan", "menu", "fog", NOW(), "report"), '
+            . '(54, "SUB_MENULINK-history_report", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=history report", "menu", "fog", NOW(), "report"), '
+            . '(55, "SUB_MENULINK-host_list", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=host list", "menu", "fog", NOW(), "report"), '
+            . '(56, "SUB_MENULINK-hosts_and_users", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=hosts and users", "menu", "fog", NOW(), "report"), '
+            . '(57, "SUB_MENULINK-imaging_log", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=imaging log", "menu", "fog", NOW(), "report"), '
+            . '(58, "SUB_MENULINK-inventory_report", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=inventory report", "menu", "fog", NOW(), "report"), '
+            . '(59, "SUB_MENULINK-pending_mac_list", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=pending mac list", "menu", "fog", NOW(), "report"), '
+            . '(60, "SUB_MENULINK-product_keys", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=product keys", "menu", "fog", NOW(), "report"), '
+            . '(61, "SUB_MENULINK-snapin_log", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=snapin log", "menu", "fog", NOW(), "report"), '
+            . '(62, "SUB_MENULINK-user_tracking", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=user tracking", "menu", "fog", NOW(), "report"), '
+            . '(63, "SUB_MENULINK-virus_history", "SUB_MENULINK", '
+            . '"?node=report&sub=file&f=virus history", "menu", "fog", NOW(), "report"), '
+            . '(64, "SUB_MENULINK-upload", "SUB_MENULINK", '
+            . '"upload", "menu", "fog", NOW(), "report"), '
+
+            //groups
+            . '(65, "SUB_MENULINK-group-image", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-image", "submenu", "fog", NOW(), "group"), '
+            . '(66, "SUB_MENULINK-group-tasks", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-tasks", "submenu", "fog", NOW(), "group"), '
+            . '(67, "SUB_MENULINK-group-active-directory", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-active-directory", "submenu", "fog", NOW(), "group"), '
+            . '(68, "SUB_MENULINK-group-printers", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-printers", "submenu", "fog", NOW(), "group"), '
+            . '(69, "SUB_MENULINK-group-snapins", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-snapins", "submenu", "fog", NOW(), "group"), '
+            . '(70, "SUB_MENULINK-group-service", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-service", "submenu", "fog", NOW(), "group"), '
+            . '(71, "SUB_MENULINK-group-powermanagement", "SUB_MENULINK", '
+            . '"?node=group&sub=edit&id=#group-powermanagement", "submenu", "fog", NOW(), "group"), '
+            . '(72, "SUB_MENULINK-inventory", "SUB_MENULINK", '
+            . '"?node=group&sub=inventory&id=", "submenu", "fog", NOW(), "group"), '
+            . '(73, "SUB_MENULINK-membership", "SUB_MENULINK", '
+            . '"?node=group&sub=membership&id=", "submenu", "fog", NOW(), "group"), '
+            . '(74, "SUB_MENULINK-delete", "SUB_MENULINK", '
+            . '"?node=group&sub=delete&id=", "submenu", "fog", NOW(), "group"), '
+
+            //others
+            . '(75, "MAIN_MENU-accesscontrol", "SUB_MENULINK", '
+            . '"accesscontrol", "main", "fog", NOW(), "")'
+
+            //CES_CUSTOMIZATION 20220302 END
+            ;
         if (self::$DB->query($sql)) {
             $sql = "CREATE UNIQUE INDEX `indexmul` "
                     . "`rules` (`ruleValue`, `ruleNode`)";

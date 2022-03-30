@@ -21,7 +21,7 @@ class Imaging_Log extends ReportManagementPage
 
     public function file()
     {
-        $this->title = _('FOG Imaging - Search');
+        $this->title = _('FOG Imaging') .'- ' . _('Search');
         unset(
                         $this->data,
                         $this->form,

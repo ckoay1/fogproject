@@ -147,7 +147,8 @@ class ReportManagementPage extends FOGPage
                     sprintf(
                         '%s%s',
                         $reportlink,
-                        base64_encode($report)
+                        //base64_encode($report)  //CES_CUSTOMIZATION 20220302 (remove encoding for access control)
+                        $report
                     ) => $item
                 )
             );

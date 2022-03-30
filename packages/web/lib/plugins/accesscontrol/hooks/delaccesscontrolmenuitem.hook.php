@@ -147,12 +147,33 @@ class DelAccessControlMenuItem extends Hook
             $AccessControlRule = new AccessControlRule(
                 $AccessControlRuleAssociation->get('accesscontrolruleID')
             );
+
+            //CES_CUSTOMIZATION 20220302 START (replace special character /add node id)
+            $ruleValue = str_replace("&amp;","&",$AccessControlRule->get('value'));
+            $isReplace = false;
+            foreach(array_keys($arguments['submenu']) as $item)
+            {
+                if($isReplace == true)
+                    break;
+
+                foreach(explode("&",explode("#",$item)[0]) as $subitem )
+                {
+                    if(explode("=",$subitem)[0] == "id"){
+                        $nodeID = explode("=",$subitem)[1];
+                        $ruleValue = str_replace("id=","id=" .$nodeID, $ruleValue);
+                        $isReplace = true;
+                    }
+                }
+            }
+            //CES_CUSTOMIZATION 20220302 END
+
             unset(
                 $arguments[
                     $AccessControlRule->get('parent')
                 ]
                 [
-                    $AccessControlRule->get('value')
+                    //$AccessControlRule->get('value')
+                    $ruleValue //CES_CUSTOMIZATION 20220302 
                 ],
                 $AccessControlRule
             );

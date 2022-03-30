@@ -360,9 +360,9 @@ class FOGPageManager extends FOGBase
                 $className = str_replace(
                     ' ',
                     '_',
-                    base64_decode(
+                    //base64_decode( //CES_CUSTOMIZATION 20220302 (remove encoding for access control)
                         filter_input(INPUT_GET, 'f')
-                    )
+                    //)
                 );
             }
             if (!$className || !isset($className)) {

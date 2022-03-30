@@ -46,12 +46,15 @@ foreach ((array)$this->stylesheets as &$stylesheet) {
 unset($this->stylesheets);
 echo '<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/>';
 echo '</head>';
-echo '<body>';
+echo '<body >';
 if (self::$FOGUser->isValid()) {
     /**
      * Navigation items
      */
-    echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    //CES_CUSTOMIZATION 20220323 START  
+    //echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    echo '<nav class="navbar navbar-fixed-top" style="background-color: #f8f8f8;border-color: #337AB7">';
+    //CES_CUSTOMIZATION 20220323 END        
     echo '<div class="container-fluid">';
     echo '<div class="navbar-header">';
     echo '<button type="button" class="navbar-toggle collapsed" data-toggle="'
@@ -67,7 +70,10 @@ if (self::$FOGUser->isValid()) {
     echo '<div class="collapse navbar-collapse">';
     echo '<ul class="nav navbar-nav">';
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
-    echo '<b>FOG</b> Project';
+    //CES_CUSTOMIZATION 20220301 START  
+    //echo '<b>FOG</b> Project';
+    echo '<div><img style="width:100%;position:relative" src="../pxelhdr.png" class="logoimg" alt="'._('FOG Project') . '"/></div>';
+    //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     self::getSearchForm();
     echo $this->menu;
@@ -95,10 +101,16 @@ if (self::$FOGUser->isValid()) {
             ''
         )
         . '">';
+
+    //CES_CUSTOMIZATION 20220302 START localized edit mode with :
+    if(strpos($this->sectionTitle,":") == true)
+        $this->sectionTitle = _(substr($this->sectionTitle,0,strpos($this->sectionTitle,":"))) .substr($this->sectionTitle,strpos($this->sectionTitle,":"));
+    //CES_CUSTOMIZATION 20220302 END localized
+
     echo '<div class="panel panel-primary">';
     echo '<div class="panel-heading text-center">';
     echo '<h4 class="title">'
-        . $this->sectionTitle
+        . _($this->sectionTitle)
         . '</h4>';
     if (self::$FOGUser->isValid && $this->pageTitle) {
         echo '<h5 class="title">'
@@ -123,7 +135,9 @@ if (self::$FOGUser->isValid()) {
     echo '</div>';
     echo '</div>';
 } else {
-    echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    //CES_CUSTOMIZATION 20220323 START     
+    //echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
+    //CES_CUSTOMIZATION 20220323 END     
     echo '<div class="container-fluid">';
     echo '<div class="navbar-header">';
     echo '<button type="button" class="navbar-toggle collapsed" data-toggle="'
@@ -139,7 +153,11 @@ if (self::$FOGUser->isValid()) {
     echo '<div class="collapse navbar-collapse">';
     echo '<ul class="nav navbar-nav">';
     echo '<a class="navbar-brand" href="../management/index.php?node=home">';
-    echo '<b>FOG</b> Project';
+    //CES_CUSTOMIZATION 20220301 START        
+    //echo '<b>FOG</b> Project';
+    //echo _('FOG Project');
+    //echo '<p> <img style="width:100%;position:relative" src="../pxelhdr.png" class="logoimg" alt="'._('FOG Project') . '"/> </p>';
+    //CES_CUSTOMIZATION 20220301 END        
     echo '</a>';
     echo '</ul>';
     echo '</div>';
@@ -158,7 +176,8 @@ if (self::$FOGUser->isValid()) {
     echo $this->body;
     echo '</div>';
 }
-echo '<div class="collapse navbar-collapse">';
+     
+echo '<div class="collapse navbar-collapse" style="visibility:hidden;display:none" >'; //CES_CUSTOMIZATION 20220301 (Hide footer)   
 echo '<footer class="footer">';
 echo '<nav class="navbar navbar-inverse navbar-fixed-bottom">';
 echo '<div class="container-fluid">';
@@ -177,16 +196,10 @@ echo '<li><a href="https://www.paypal.com/cgi-bin/webscr?item_name=Donation'
 if (self::$FOGUser->isValid()) {
     echo '<li class="pull-right">';
     echo '<a href="../management/index.php?node=about">';
-    //CES_CUSTOMIZATION 20220131 START        
     echo '<b>';
-    echo _('iVE VCS CES Version');
+    echo _('Version');
     echo '</b> ';
-    echo FOG_VERSION_CES;
-    //echo '<b>';
-    //echo _('Version');
-    //echo '</b> ';
-    //echo FOG_VERSION;
-    //CES_CUSTOMIZATION 20220131 END        
+    echo FOG_VERSION;
     echo '</a>';
     echo '</li>';
 }
@@ -195,6 +208,8 @@ echo '</div>';
 echo '</nav>';
 echo '</footer>';
 echo '</div>';
+
+
 foreach ((array)$this->javascripts as &$javascript) {
     echo '<script src="'
         . $javascript

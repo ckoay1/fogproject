@@ -724,7 +724,7 @@ $this->schema[] = array(
     . "(`settingKey`,`settingDesc`,`settingValue`,`settingCategory`) "
     . "VALUES "
     . "('FOG_PLUGINSYS_ENABLED', 'This setting defines if the fog plugin "
-    . "system should be enabled.','0','Plugin System'),"
+    . "system should be enabled.','1','Plugin System')," //CES_CUSTOMIZATION 20220328 ENABLE PLUGIN BY DEFAULT    
     . "('FOG_PLUGINSYS_DIR','This setting defines the base location "
     . "of fog plugins.','./plugins','Plugin System')",
     "CREATE TABLE `plugins` ("

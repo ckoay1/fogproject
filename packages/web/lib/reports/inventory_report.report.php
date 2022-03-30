@@ -21,7 +21,7 @@ class Inventory_Report extends ReportManagementPage
 
     public function file()
     {
-        $this->title = _('FOG Host Inventory - Search');
+        $this->title = _('FOG Host Inventory') .'- ' . _('Search');
         unset(
                 $this->data,
                 $this->form,

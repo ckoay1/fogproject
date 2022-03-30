@@ -630,6 +630,7 @@ while [[ -z $blGo ]]; do
                     writeUpdateFile
                     linkOptFogDir
                     updateStorageNodeCredentials
+                    enableAccessControlPlugin
                     echo
                     echo " * Setup complete"
                     echo

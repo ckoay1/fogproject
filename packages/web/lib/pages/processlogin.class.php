@@ -287,25 +287,34 @@ class ProcessLogin extends FOGPage
         $logininfo = self::getSetting('FOG_LOGIN_INFO_DISPLAY');
         $extra = '';
         if ($logininfo) {
-            $extra = '<div id="login-form-info">'
-                . '<p>'
+            $extra = 
+                //CES_CUSTOMIZATION 20220302 START
+                '<div id="login-form-info">'
+                . '<p style="visibility:hidden;display:none">'
                 . self::$foglang['FOGSites']
                 . ': <b>'
                 . '<i class="icon fa fa-circle-o-notch fa-spin fa-fw"></i>'
                 . '</b>'
                 . '</p>'
-                . '<p>'
+                . '<p style="visibility:hidden;display:none">'
                 . self::$foglang['LatestVer']
                 . ': <b>'
                 . '<i class="icon fa fa-circle-o-notch fa-spin fa-fw"></i>'
                 . '</b>'
                 . '</p>'
-                . '<p>'
+                . '<p style="visibility:hidden;display:none">'
                 . self::$foglang['LatestDevVer']
                 . ': <b>'
                 . '<i class="icon fa fa-circle-o-notch fa-spin fa-fw"></i>'
                 . '</b>'
                 . '</p>'
+                . '<p>'
+                . _('PXEL Version')
+                . ': <b>'
+                . FOG_VERSION_CES
+                . '</b>'
+                . '</p>'
+                //CES_CUSTOMIZATION 20220302 END
                 . '</div>';
         }
         // Login form

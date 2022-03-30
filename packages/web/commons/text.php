@@ -202,6 +202,7 @@ $foglang['Snapin Management'] = _('Snapin Management');
 $foglang['Plugin Management'] = _('Plugin Management');
 $foglang['Location Management'] = _('Location Management');
 $foglang['Access Management'] = _('Access Control Management');
+$foglang['About Us'] = _('About Us');
 // Help page translations
 $foglang['GenHelp'] = _('FOG General Help');
 // Sub Menu translates

@@ -925,7 +925,8 @@ abstract class FOGPage extends FOGBase
                 . 'data-column="'
                 . $index
                 . '">';
-            echo $content;
+            //echo $content;
+            echo ($content == "" ? $content : _($content)); //CES_CUSTOMIZATION 20220302 table header
             echo '</th>';
             unset($content);
         }
@@ -2119,7 +2120,7 @@ abstract class FOGPage extends FOGBase
                 'task_id' => '&type='.$TaskType->id,
                 'task_icon' => $TaskType->icon,
                 'task_name' => $TaskType->name,
-                'task_desc' => $TaskType->description,
+                'task_desc' => str_replace('FOG',_('FOG'),$TaskType->description), //CES_CUSTOMIZATION 20220302 (localized advance menu desc)
             );
             unset($TaskType);
         };
@@ -2144,7 +2145,7 @@ abstract class FOGPage extends FOGBase
             'task_name' => _('Advanced'),
             'task_desc' => _('View advanced tasks for this')
             . ' '
-            . $this->node
+            . _($this->node)
             . '.'
         );
         self::$HookManager->processEvent(
@@ -2166,7 +2167,7 @@ abstract class FOGPage extends FOGBase
         echo '<div class="panel panel-info">';
         echo '<div class="panel-heading text-center">';
         echo '<h4 class="title">';
-        echo $this->childClass;
+        echo _($this->childClass);
         echo ' ';
         echo _('Tasks');
         echo '</h4>';
@@ -3308,7 +3309,7 @@ abstract class FOGPage extends FOGBase
         }
         $this->title = _('Search')
             . ' '
-            . $this->node
+            . _($this->node) //CES_CUSTOMIZATION 20220302 (localized)
             . "s";
         self::$HookManager->processEvent(
             sprintf(
@@ -3509,7 +3510,7 @@ abstract class FOGPage extends FOGBase
             echo '<h4 class="title">';
             echo _('Add')
                 . ' '
-                . ucfirst($getType);
+                . _(ucfirst($getType)); //CES_CUSTOMIZATION 20220302 (localization)
             echo '</h4>';
             echo '</div>';
             echo '<div class="panel-body">';
@@ -3566,7 +3567,7 @@ abstract class FOGPage extends FOGBase
             echo '<div class="panel panel-warning">';
             echo '<div class="panel-heading text-center">';
             echo '<h4 class="title">';
-            echo _('Remove ' . ucfirst($getType));
+            echo _('Remove ' . _(ucfirst($getType))); //CES_CUSTOMIZATION 20220302 (localization)
             echo '</h4>';
             echo '</div>';
             echo '<div class="panel-body">';
@@ -3650,7 +3651,7 @@ abstract class FOGPage extends FOGBase
     {
         $this->title = sprintf(
             'Export %s',
-            $this->childClass
+            _($this->childClass) //CES_CUSTOMIZATION 20220302 localized
         );
         unset(
             $this->data,
@@ -3752,7 +3753,7 @@ abstract class FOGPage extends FOGBase
     {
         $this->title = _('Import')
             . ' '
-            . $this->childClass
+            . _($this->childClass) //CES_CUSTOMIZATION 20220302 localized
             . ' '
             . _('List');
         unset(

@@ -168,10 +168,12 @@ class Page extends FOGBase
                     self::$foglang['Snapin'],
                     'fa fa-files-o'
                 ),
-                'printer' => array(
-                    self::$foglang['Printer'],
-                    'fa fa-print'
-                ),
+                //CES_CUSTOMIZATION 20220328 START  
+                // 'printer' => array(
+                //     self::$foglang['Printer'],
+                //     'fa fa-print'
+                // ),
+                //CES_CUSTOMIZATION 20220328 END  
                 'service' => array(
                     self::$foglang['ClientSettings'],
                     'fa fa-cogs'
@@ -187,7 +189,13 @@ class Page extends FOGBase
                 'about' => array(
                     self::$foglang['FOG Configuration'],
                     'fa fa-wrench'
+                ),
+                //CES_CUSTOMIZATION 20220323 START  
+                'aboutus' => array(
+                    self::$foglang['About Us'],
+                    'fa fa-info-circle'
                 )
+                //CES_CUSTOMIZATION 20220323 END  
             );
             if (self::getSetting('FOG_PLUGINSYS_ENABLED')) {
                 self::arrayInsertAfter(
@@ -457,7 +465,7 @@ class Page extends FOGBase
     public static function getSearchForm()
     {
         global $node;
-        echo '<div class="col-md-3">';
+        echo '<div class="col-md-2">';
         if (in_array($node, self::$searchPages)) {
             echo '<li class="pull-left">';
             echo '<form class="navbar-form navbar-left search-wrapper" role='
@@ -537,7 +545,7 @@ class Page extends FOGBase
         foreach ($class->menu as $l => &$t) {
             $FOGSub->addMainItems(
                 $class->node,
-                array((string)$t => (string)$l),
+                array((string)($t == "" ? $t : _($t)) => (string)$l), //CES_CUSTOMIZATION 20220302 (localized submenu)
                 '',
                 '',
                 'mainmenu'

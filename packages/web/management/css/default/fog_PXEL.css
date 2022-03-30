@@ -25,7 +25,7 @@ body {
     margin: auto;
     max-width: 500px;
     padding: 15px 35px 0 35px;
-    background-color: #F8F8F8;
+    background-color: #fff;
     border: 1px solid rgba(0,0,0,0.1);
     .form-control {
         position: relative;
@@ -230,3 +230,88 @@ input[type=checkbox].delvid:checked + label:before {
         }
     }
 }
+
+/*******CES Customized Theme Start ********/
+/*Header Title*/
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+	background-image: -webkit-linear-gradient(top,#337ab7 0,#2e6da4 100%);
+    background-image: -o-linear-gradient(top,#337ab7 0,#2e6da4 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#337ab7),to(#2e6da4));
+    background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff2e6da4', GradientType=0);
+    background-repeat: repeat-x;
+}
+
+
+/*Header Title Body Border*/
+.panel-primary {
+    border-color: #337ab7;
+}
+
+/*Sub Title*/
+.panel-info>.panel-heading {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+	background-image: -webkit-linear-gradient(top,#d9edf7 0,#c4e3f3 100%);
+    background-image: -o-linear-gradient(top,#d9edf7 0,#c4e3f3 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#d9edf7),to(#c4e3f3));
+    background-image: linear-gradient(to bottom,#d9edf7 0,#c4e3f3 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9edf7', endColorstr='#ffc4e3f3', GradientType=0);
+    background-repeat: repeat-x;
+}
+
+
+/*Sub Title Wording*/
+.panel-info {
+    border-color: #bce8f1;
+}
+
+/*Link Wording */
+a {
+    color: #337ab7;
+}
+
+/*Header & Footer Background */
+.navbar-inverse {
+    background-image: -webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
+    background-image: -o-linear-gradient(top,#3c3c3c 0,#222 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#222));
+    background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-radius: 4px;
+}
+
+.btn-info {
+    background-image: -webkit-linear-gradient(top,#5bc0de 0,#2aabd2 100%);
+    background-image: -o-linear-gradient(top,#5bc0de 0,#2aabd2 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#5bc0de),to(#2aabd2));
+    background-image: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2aabd2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #28a4c9;
+}
+
+/*this color need to close to existing button color*/
+.btn-info:focus, .btn-info:hover {
+    background-color: #2aabd2;
+	border-color: #1b6d85;
+}
+
+
+.btn-info:active{
+    background-image: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+	background-color: #5bc0de;
+    border-color: #1b6d85;
+}
+
+
+
+
+/*******CES Customized Theme END ********/
