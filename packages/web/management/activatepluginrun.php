@@ -6,19 +6,11 @@
  *
  * @category Run
  * @package  FOGProject
- * @author   Tom Elliott <tommygunsster@gmail.com>
+ * @author   WeiTheng (wei.theng.tan@intel.com)
  * @license  http://opensource.org/licenses/gpl-3.0 GPLv3
  * @link     https://fogproject.org
  */
-/**
- * Plugin run file.
- *
- * @category Run
- * @package  FOGProject
- * @author   Tom Elliott <tommygunsster@gmail.com>
- * @license  http://opensource.org/licenses/gpl-3.0 GPLv3
- * @link     https://fogproject.org
- */
+
 require '../commons/base.inc.php';
 $FOGCore = $GLOBALS['FOGCore'];
 

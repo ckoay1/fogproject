@@ -168,10 +168,12 @@ class Page extends FOGBase
                     self::$foglang['Snapin'],
                     'fa fa-files-o'
                 ),
-                'printer' => array(
-                    self::$foglang['Printer'],
-                    'fa fa-print'
-                ),
+                //CES_CUSTOMIZATION 20220328 START  
+                // 'printer' => array(
+                //     self::$foglang['Printer'],
+                //     'fa fa-print'
+                // ),
+                //CES_CUSTOMIZATION 20220328 END  
                 'service' => array(
                     self::$foglang['ClientSettings'],
                     'fa fa-cogs'

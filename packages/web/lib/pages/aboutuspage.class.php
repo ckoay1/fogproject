@@ -6,14 +6,7 @@
  *
  * @category AboutUsPage
  * @package  FOGProject
- * @author   CES Team <ive.vla.sre.ces@intel.com>
- */
-/**
- * Presents the About Us page.
- *
- * @category AboutUsPage
- * @package  FOGProject
- * @author   CES Team <ive.vla.sre.ces@intel.com>
+ * @author   WeiTheng
  */
 
  class AboutUsPage extends FOGPage
@@ -58,20 +51,33 @@
                 echo '<div class="panel-body">';
 
                 echo '<table class="table table-responsive">';
+        
                 echo '<tbody>';
                 //row
                 echo '<tr class="home">';
-                echo '<td class="col-xs-2">PXEL Wiki</td>';
-                echo '<td class="col-xs-10"><a href="https://wiki.ith.intel.com/display/OSDeploy"> Wiki Site </a> </td>';
-                echo '</tr>';
-                echo '<tr class="home">';
                 echo '<td class="col-xs-2">PXEL Team</td>';
-                echo '<td class="col-xs-10">iVE (intel Validation Engineering) > VLA (Validation Labs & Automation) > VCS (Validation Cloud Solutions) > CES (Cloud & Engineering Solutions) </td>';
+                echo '<td class="col-xs-10">iVE > VLA > VCS > CES </td>';
                 echo '</tr>';
                 //row
                 echo '<tr class="home">';
-                echo '<td class="col-xs-2">PXEL Team Contact</td>';
-                echo '<td class="col-xs-10"><a href="mailto:ive.vla.sre.ces@intel.com">Email Us</a></td>';
+                echo '<td class="col-xs-2">PXEL Version</td>';
+                echo '<td class="col-xs-10">' .FOG_VERSION_CES .'</td>';
+                echo '</tr>';
+                //row
+                echo '<tr class="home">';
+                echo '<td class="col-xs-2">PXEL Wiki</td>';
+                echo '<td class="col-xs-10"><a href="https://wiki.ith.intel.com/display/OSDeploy" target="_blank"> Visit Here </a></td>';
+                echo '</tr>';
+                //row
+                echo '<tr class="home">';
+                echo '<td class="col-xs-2">Support Model (SLA)</td>';
+                echo '<td class="col-xs-10"><a href="https://wiki.ith.intel.com/display/OSDeploy/Support+Model" target="_blank"> Visit Here </a></td>';
+                echo '</tr>';
+                //row
+                echo '<tr class="home">';
+                echo '<td class="col-xs-2">New Request & Support </td>';
+                echo '<td class="col-xs-10"><a href="https://hsdes.intel.com/appstore/gts/#/newticket" target="_blank"> Visit Here </a>';
+                echo '(File ticket at <b>HSD > tool support</b> with component <b>tool.pxel</b>)</td>';
                 echo '</tr>';
                 //row
                 echo '<tr class="home">';
