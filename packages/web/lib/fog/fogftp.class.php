@@ -214,7 +214,8 @@ class FOGFTP extends FOGGetSet
                     $timeout = $this->get('timeout');
                 }
             }
-            $this->_link = $connectmethod($host, $port, $timeout);
+            //$this->_link = $connectmethod($host, $port, $timeout);
+            $this->_link = $connectmethod($_SERVER['SERVER_ADDR'], $port, $timeout); //CES_CUSTOMIZATION GET Host By its current IP
             if ($this->_link === false) {
                 trigger_error(_('FTP connection failed'), E_USER_NOTICE);
                 $this->ftperror($this->data);
