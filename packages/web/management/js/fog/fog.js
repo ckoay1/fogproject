@@ -629,6 +629,12 @@ submithandlerfunc = function(form) {
                 },
                 onhidden: function(dialogRef) {
                     clearTimeout(bootstrapdialogopen);
+                    //CES_CUSTOMIZATION REDIRECT IF PARA PROVIDED START
+                    if(data.redirect)
+                    {
+                        location.href = data.redirect;
+                    }
+                    //CES_CUSTOMIZATION REDIRECT IF PARA PROVIDED END
                 }
             });
         }

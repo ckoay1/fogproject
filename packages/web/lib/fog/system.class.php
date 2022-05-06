@@ -54,9 +54,9 @@ class System
     {
         self::_versionCompare();
         define('FOG_VERSION', '1.5.9');
-        define('FOG_SCHEMA', 270);
+        define('FOG_SCHEMA', 271);
         define('FOG_BCACHE_VER', 135);
         define('FOG_CLIENT_VERSION', '0.12.0');
-        define('FOG_VERSION_CES', '1.5.9.20220328');
+        define('FOG_VERSION_CES', '1.5.9.20220506');
     }
 }
