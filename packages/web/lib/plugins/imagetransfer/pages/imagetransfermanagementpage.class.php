@@ -379,7 +379,7 @@ class ImageTransferManagementPage extends FOGPage
      */
     public function addImageTransferPost()
     {
-
+        $pxelAPI = new PXELApi();
         $source_desc = filter_input(
             INPUT_POST,
             'hidden_srcdesc'
@@ -409,6 +409,7 @@ class ImageTransferManagementPage extends FOGPage
             INPUT_POST,
             'hidden_imageserversize'
         );
+        
 
         try {
 
@@ -422,7 +423,7 @@ class ImageTransferManagementPage extends FOGPage
                 ->set('imageServerSize', $image_server_size)
                 ->set('startTime', self::formatTime('now', 'Y-m-d H:i:s'))
                 ->set('statusID', '1');
-               
+            
             if (!$ImageTransfer->save()) {
                 throw new Exception(_('Add image transfer failed!'));
             }
@@ -437,7 +438,14 @@ class ImageTransferManagementPage extends FOGPage
             );
 
             //Call PXEL API for Image Transfer
-            
+            $newTransferId = $ImageTransfer->get('id');
+            $requestdata = "{
+                \"sourceSiteName\":\"$source_desc\", 
+                \"sourceImageName\":\"$image_desc\",
+                \"destSiteName\":\"$destination_desc\",
+                \"transferId\":\"$newTransferId\"
+            }";
+            $pxelAPI->transferImage($requestdata);
 
         } catch (Exception $e) {
             $hook = 'IMAGETRANSFER_ADD_FAIL';
@@ -467,6 +475,7 @@ class ImageTransferManagementPage extends FOGPage
      */
     public function activeTransferStatus()
     {
+        // echo "Test";
         unset(
             $this->form,
             $this->data,

@@ -29,7 +29,7 @@ class PXELApi extends FOGBase
 
     /**
         * PXEL List All Sites API
-        * @return object
+        * @return string
         */
     public function listSites()
     {
@@ -39,7 +39,7 @@ class PXELApi extends FOGBase
     /**
         * PXEL List Images By Site API
         * @param string $siteCode - SiteName
-        * @return object
+        * @return string
         */
     public function listImagesBySite($siteCode)
     {
@@ -51,7 +51,7 @@ class PXELApi extends FOGBase
         * @param string $method call to use
         * @param string $endpoint to request
         * @param array $data for cURL
-        * @return object
+        * @return string
         */
     private function CurlCallAPI($method, $endpoint, $data = false)
     {     
@@ -87,7 +87,7 @@ class PXELApi extends FOGBase
         // Execute cURL command call to PXEL Central API server
         $result = curl_exec($curl);
 
-        /*
+        
         // Error handling
         if(curl_errno($curl))
         {   
@@ -98,7 +98,7 @@ class PXELApi extends FOGBase
             $response = json_decode($result);
             throw new Exception($response->Message . ' (' .curl_getinfo($curl, CURLINFO_HTTP_CODE). ')');
         }
-        */
+        
         
         // Close cURL session and frees all resources
         curl_close($curl);
