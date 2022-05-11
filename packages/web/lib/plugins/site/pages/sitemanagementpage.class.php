@@ -502,7 +502,7 @@ class SiteManagementPage extends FOGPage
         echo '<div class="panel panel-info">';
         echo '<div class="panel-heading text-center">';
         echo '<h4 class="title">';
-        echo _('Host Membership');
+        echo _('Host') .' ' ._('Membership');
         echo '</h4>';
         echo '</div>';
         echo '<div class="panel-body">';
