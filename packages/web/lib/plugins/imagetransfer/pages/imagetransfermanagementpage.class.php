@@ -23,12 +23,9 @@ class ImageTransferManagementPage extends FOGPage
     {
         if(isset($_REQUEST['siteCode']))
         {
-            //self::$showhtml = false;
-
             $pxelAPI = new PXELApi();
             $pxelListSrcImage = json_decode($pxelAPI->listImagesBySite($_REQUEST['siteCode']));
             $srcImage = $pxelListSrcImage->Images;
-
             foreach ((array)$srcImage as &$img) {
                 $items[] = array(
                     $img->id,
@@ -115,109 +112,164 @@ class ImageTransferManagementPage extends FOGPage
      */
     public function addImageTransfer()
     {
-        $pxelAPI = new PXELApi();
-        $pxelListSites = json_decode($pxelAPI->listSites());
-
-        unset(
-            $this->form,
-            $this->data,
-            $this->headerData,
-            $this->templates,
-            $this->attributes
-        );
-        $this->title = _('New Image Transfer');
-        $this->attributes = array(
-            array('class' => 'col-xs-4'),
-            array('class' => 'col-xs-8 form-group'),
-        );
-        $this->templates = array(
-            '${field}',
-            '${input}',
-        );
-        $source = (int)filter_input(INPUT_POST, 'imagetransferSource');
-        $source_desc = filter_input(INPUT_POST, 'imagetransferSource');
-        $destination = (int)filter_input(INPUT_POST, 'imagetransferDestination');
-        $imagename = (int)filter_input(INPUT_POST, 'imagetransferSrcImage');
-        
-        self::getClass('ImageTransferSitesManager')->truncateTable();
-        self::getClass('ImageTransferSitesManager')->insertBatch(
-            array(
-                'name'
-            ),
-            $pxelListSites->Sites
-        );
-
-        $fields = array(
-            '<label for="source">'
-            . _('Source')
-            . '</label>' => '<div class="input-group">'
-            . self::getClass('ImageTransferSitesManager')->buildSelectBox(
-                $source_desc,
-                'imagetransferSource',
-                'id'
-            )
-            . '</div>',
-            '<label for="destination">'
-            . _('Destination')
-            . '</label>' => '<div class="input-group">'
-            . self::getClass('ImageTransferSitesManager')->buildSelectBox(
-                $destination,
-                'imagetransferDestination',
-                'id'
-            )
-            . '</div>',
-            '<label for="image">'
-            . _('Image Name')
-            . '</label>' => '<div class="input-group" id="imgTrfSrc">'
-            . self::getClass('ImageTransferSrcImagesManager')->buildSelectBox(
-                $imagename,
-                'imagetransferSrcImage',
-                'id'
-            )
-            . '</div>',
-            '<label for="add">'
-            . _('Create New Image Transfer')
-            . '</label>' => '<button type="submit" name="add" id="add" ' 
-            . 'class="btn btn-info btn-block">'
-            . _('Add')
-            . '</button> '
-        );
-        array_walk($fields, $this->fieldsToData);
-       
-        self::$HookManager
-            ->processEvent(
-                'IMAGETRANSFER_ADD',
-                array(
-                    'headerData' => &$this->headerData,
-                    'data' => &$this->data,
-                    'templates' => &$this->templates,
-                    'attributes' => &$this->attributes
-                )
+        try{
+            $pxelAPI = new PXELApi();
+            $pxelListSites = json_decode($pxelAPI->listSites());
+    
+            unset(
+                $this->form,
+                $this->data,
+                $this->headerData,
+                $this->templates,
+                $this->attributes
             );
-        unset($fields);
-        echo '<div class="col-xs-9">';
-        echo '<div class="panel panel-info">';
-        echo '<div class="panel-heading text-center">';
-        echo '<h4 class="title">';
-        echo $this->title;
-        echo '</h4>';
-        echo '</div>';
-        echo '<div class="panel-body">';
-        echo '<form class="form-horizontal" method="post" action="'
-            . '?node=imagetransfer&sub=addImageTransferConfirm'
-            . '">';
-        $this->render(12);
-        echo '</form>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        unset(
-            $this->data,
-            $this->form,
-            $this->headerData,
-            $this->templates,
-            $this->attributes
-        );
+            $this->title = _('New Image Transfer');
+            $this->attributes = array(
+                array('class' => 'col-xs-4'),
+                array('class' => 'col-xs-8 form-group'),
+            );
+            $this->templates = array(
+                '${field}',
+                '${input}',
+            );
+            $source = (int)filter_input(INPUT_POST, 'imagetransferSource');
+            $source_desc = filter_input(INPUT_POST, 'imagetransferSource');
+            $destination = (int)filter_input(INPUT_POST, 'imagetransferDestination');
+            $imagename = (int)filter_input(INPUT_POST, 'imagetransferSrcImage');
+            
+            self::getClass('ImageTransferSitesManager')->truncateTable();
+            self::getClass('ImageTransferSitesManager')->insertBatch(
+                array(
+                    'name'
+                ),
+                $pxelListSites->Sites
+            );
+
+            
+            $allSiteTransferFeature = 0;
+            if (!in_array('accesscontrol', (array)self::$pluginsinstalled)) {
+                return;
+            }else{
+                $userID = self::getSubObjectIDs(
+                    'User',
+                    array(
+                        'name' => self::$FOGUser->get('name')
+                    ),
+                    'id'
+                );
+                $acID = self::getSubObjectIDs(
+                    'AccessControlAssociation',
+                    array('userID' => $userID),
+                    'accesscontrolID'
+                );
+
+                foreach ((array)self::getClass('AccessControlRuleAssociationManager')
+                    ->find(array('accesscontrolID' => $acID, )) as
+                    &$AccessControlRuleAssociation
+                ) {
+                    $AccessControlRule = new AccessControlRule(
+                        $AccessControlRuleAssociation->get('accesscontrolruleID')
+                    );
+
+                    $ruleValue = $AccessControlRule->get('value');
+
+                    if($ruleValue == 'all-site-transfer')
+                    {
+                        $allSiteTransferFeature = 1;
+                        break;
+                    }
+                }
+            }
+                
+            $fields = array(
+                '<label for="source">'
+                . _('Source')
+                . '</label>' => '<div class="input-group">'
+                . self::getClass('ImageTransferSitesManager')->buildSelectBox(
+                    $source_desc,
+                    'imagetransferSource',
+                    'id'
+                )
+                . '<input type="hidden" id="hidden_currentSite" value="'.$pxelListSites->SiteCode  .'"/>'
+                . '<input type="hidden" id="hidden_allSiteTransfer" value="'.$allSiteTransferFeature  .'"/>'
+                . '</div>',
+                '<label for="destination">'
+                . _('Destination')
+                . '</label>' => '<div class="input-group">'
+                . self::getClass('ImageTransferSitesManager')->buildSelectBox(
+                    $destination,
+                    'imagetransferDestination',
+                    'id'
+                )
+                . '</div>',
+                '<label for="image">'
+                . _('Image Name')
+                . '</label>' => '<div class="input-group" id="imgTrfSrc">'
+                . self::getClass('ImageTransferSitesManager')->buildSelectBox(
+                    $imagename,
+                    'imagetransferSrcImages',
+                    'id'
+                )
+                . '</div>',
+                '<label for="add">'
+                . _('Create New Image Transfer')
+                . '</label>' => '<button type="submit" name="add" id="add" ' 
+                . 'class="btn btn-info btn-block">'
+                . _('Add')
+                . '</button> '
+            );
+            array_walk($fields, $this->fieldsToData);
+           
+            self::$HookManager
+                ->processEvent(
+                    'IMAGETRANSFER_ADD',
+                    array(
+                        'headerData' => &$this->headerData,
+                        'data' => &$this->data,
+                        'templates' => &$this->templates,
+                        'attributes' => &$this->attributes
+                    )
+                );
+            unset($fields);
+            echo '<div id="loading"><img id="loading-image" src="../loading.gif" alt="Loading..." /></div>';
+            echo '<div class="col-xs-9">';
+            echo '<div class="panel panel-info">';
+            echo '<div class="panel-heading text-center">';
+            echo '<h4 class="title">';
+            echo $this->title;
+            echo '</h4>';
+            echo '</div>';
+            echo '<div class="panel-body">';
+            echo '<form class="form-horizontal" method="post" action="'
+                . '?node=imagetransfer&sub=addImageTransferConfirm'
+                . '">';
+            $this->render(12);
+            echo '</form>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            unset(
+                $this->data,
+                $this->form,
+                $this->headerData,
+                $this->templates,
+                $this->attributes
+            );
+        }catch (Exception $e) {
+            echo '<div class="col-xs-9">';
+            echo '<div class="panel panel-info">';
+            echo '<div class="panel-heading text-center">';
+            echo '<h4 class="title">';
+            echo 'Image Trasfer PXEL API is Down';
+            echo '</h4>';
+            echo '</div>';
+            echo '<div class="panel-body">';
+            echo 'Please try again later or raise ticket if issue persists';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+ 
     }
 
     /**
@@ -242,134 +294,181 @@ class ImageTransferManagementPage extends FOGPage
             'imagetransferSrcImages'
         );
 
-        foreach ((array)self::getClass('ImageTransferSitesManager')
-            ->find(array('id' => $source)) as &$findSites
-        )
-        {
-            $source_desc = $findSites->get('name');
-            unset($findSites);
-            break;
-        }
-            
-        foreach ((array)self::getClass('ImageTransferSitesManager')
-        ->find(array('id' => $destination)) as &$findSites
-        )
-        {
-            $destination_desc = $findSites->get('name');
-            unset($findSites);
-            break;
-        }
-            
-        foreach ((array)self::getClass('ImageTransferSrcImagesManager')
-        ->find(array('id' => $imageid)) as &$findSites
-        )
-        {
-            $image_desc = $findSites->get('name');
-            $image_size = $findSites->get('size');
-            $image_server_size = $findSites->get('imageServerSize');
-
-            $image_size_formated = self::formatByteSize(
-                            array_sum(
-                                explode(
-                                    ':',
-                                    $image_size 
-                                )
-                            )
-                        );
-            unset($findSites);
-            break;
-        }
+        $currentsite = filter_input(
+            INPUT_POST,
+            'hidden_currentSite'
+        );
         
-        unset(
-            $this->data,
-            $this->headerData,
-            $this->templates,
-            $this->attributes
-        );
+        try{
+            $ImageTransfer = self::getClass('ImageTransfer');
 
-        $this->title = _('Confirm Image Transfer');
-        $this->attributes = array(
-            array('class' => 'col-xs-4'),
-            array('class' => 'col-xs-8 form-group'),
-        );
-        $this->templates = array(
-            '${field}',
-            '${input}',
-        );
+            if (!$source) {
+                throw new Exception(
+                    _('A source is required!')
+                );
+            }
 
+            if (!$destination) {
+                throw new Exception(
+                    _('A destination is required!')
+                );
+            }
 
-        $fields = array(
-            '<label for="source">'
-            . _('Source')
-            . '</label>' => '<label for="source_value">'
-            . $source_desc
-            . '</label>'
-            . '<input type="hidden" name="hidden_srcdesc" value="'.$source_desc  .'"/>',
-            '<label for="destination">'
-            . _('Destination')
-            . '</label>' => '<label for="destination_value">'
-            . $destination_desc
-            . '</label>'
-            . '<input type="hidden" name="hidden_destdesc" value="'.$destination_desc  .'"/>',
-            '<label for="image">'
-            . _('Image Name')
-            . '</label>' => '<label for="image_value">'
-            . $image_desc
-            . '</label>'
-            . '<input type="hidden" name="hidden_imageid" value="'.$imageid  .'"/>'
-            . '<input type="hidden" name="hidden_imagedesc" value="'.$image_desc  .'"/>',
-            '<label for="image_size">'
-            . _('Image Name')
-            . '</label>' => '<label for="image_size_value">'
-            . $image_size_formated
-            . '</label>'
-            . '<input type="hidden" name="hidden_imagesize" value="'.$image_size  .'"/>'
-            . '<input type="hidden" name="hidden_imageserversize" value="'.$image_server_size  .'"/>',
-            '<label for="add">'
-            . _('Create New Image Transfer')
-            . '</label>' => '<button type="submit" name="addimagetransfer" id="addimagetransfer" '
-            . 'class="btn btn-info btn-block">'
-            . _('Confirm Transfer')
-            . '</button>'
-        );
-        array_walk($fields, $this->fieldsToData);
-     
-        self::$HookManager
-        ->processEvent(
-            'IMAGETRANSFER_DEPLOY',
-            array(
-                'headerData' => &$this->headerData,
-                'data' => &$this->data,
-                'templates' => &$this->templates,
-                'attributes' => &$this->attributes
+            if (!$imageid) {
+                throw new Exception(
+                    _('A image name is required!')
+                );
+            }
+
+            foreach ((array)self::getClass('ImageTransferSitesManager')
+                ->find(array('id' => $source)) as &$findSites
             )
-        );
+            {
+                $source_desc = $findSites->get('name');
+                unset($findSites);
+                break;
+            }
+                
+            foreach ((array)self::getClass('ImageTransferSitesManager')
+            ->find(array('id' => $destination)) as &$findSites
+            )
+            {
+                $destination_desc = $findSites->get('name');
+                unset($findSites);
+                break;
+            }
+           
+                
+            foreach ((array)self::getClass('ImageTransferSrcImagesManager')
+            ->find(array('id' => $imageid)) as &$findSites
+            )
+            {
+                $image_desc = $findSites->get('name');
+                $image_size = $findSites->get('size');
+                $image_server_size = $findSites->get('imageServerSize');
 
-        unset($fields);
-        echo '<!-- Confirm Items -->';
-        echo '<div class="col-xs-9">';
-        echo '<div class="panel panel-warning">';
-        echo '<div class="panel-heading text-center">';
-        echo '<h4 class="title">';
-        echo $this->title;
-        echo '</h4>';
-        echo '</div>';
-        echo '<div class="panel-body">';
-        echo '<form class="form-horizontal" method="post" action="'
-            . '?node=imagetransfer&sub=addImageTransfer'
-            . '">';
-        $this->render(12);
-        echo '</form>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
+                $image_size_formated = self::formatByteSize(
+                                array_sum(
+                                    explode(
+                                        ':',
+                                        $image_size 
+                                    )
+                                )
+                            );
+                unset($findSites);
+                break;
+            }
+            
+            unset(
+                $this->data,
+                $this->headerData,
+                $this->templates,
+                $this->attributes
+            );
 
-        unset(
-            $this->data,
-            $this->headerData,
-            $this->templates,
-            $this->attributes
-        );
+            $this->title = _('Confirm Image Transfer');
+            $this->attributes = array(
+                array('class' => 'col-xs-4'),
+                array('class' => 'col-xs-8 form-group'),
+            );
+            $this->templates = array(
+                '${field}',
+                '${input}',
+            );
+
+
+            $fields = array(
+                '<label for="source">'
+                . _('Source')
+                . '</label>' => '<label for="source_value">'
+                . $source_desc
+                . '</label>'
+                . '<input type="hidden" name="hidden_srcdesc" value="'.$source_desc  .'"/>',
+                '<label for="destination">'
+                . _('Destination')
+                . '</label>' => '<label for="destination_value">'
+                . $destination_desc
+                . '</label>'
+                . '<input type="hidden" name="hidden_destdesc" value="'.$destination_desc  .'"/>',
+                '<label for="image">'
+                . _('Image Name')
+                . '</label>' => '<label for="image_value">'
+                . $image_desc
+                . '</label>'
+                . '<input type="hidden" name="hidden_imageid" value="'.$imageid  .'"/>'
+                . '<input type="hidden" name="hidden_imagedesc" value="'.$image_desc  .'"/>',
+                '<label for="image_size">'
+                . _('Image Name')
+                . '</label>' => '<label for="image_size_value">'
+                . $image_size_formated
+                . '</label>'
+                . '<input type="hidden" name="hidden_imagesize" value="'.$image_size  .'"/>'
+                . '<input type="hidden" name="hidden_imageserversize" value="'.$image_server_size  .'"/>',
+                '<label for="add">'
+                . _('Create New Image Transfer')
+                . '</label>' => '<button type="submit" name="addimagetransfer" id="addimagetransfer" '
+                . 'class="btn btn-info btn-block">'
+                . _('Confirm Transfer')
+                . '</button>'
+            );
+            array_walk($fields, $this->fieldsToData);
+            
+            self::$HookManager
+            ->processEvent(
+                'IMAGETRANSFER_ADD',
+                array(
+                    'headerData' => &$this->headerData,
+                    'data' => &$this->data,
+                    'templates' => &$this->templates,
+                    'attributes' => &$this->attributes
+                )
+            );
+
+            unset($fields);
+            echo '<!-- Confirm Items -->';
+            echo '<div class="col-xs-9">';
+            echo '<div class="panel panel-warning">';
+            echo '<div class="panel-heading text-center">';
+            echo '<h4 class="title">';
+            echo $this->title;
+            echo '</h4>';
+            echo '</div>';
+            echo '<div class="panel-body">';
+            echo '<form class="form-horizontal" method="post" action="'
+                . '?node=imagetransfer&sub=addImageTransfer'
+                . '">';
+            $this->render(12);
+            echo '</form>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+
+            unset(
+                $this->data,
+                $this->headerData,
+                $this->templates,
+                $this->attributes
+            );
+
+        
+        } catch (Exception $e) {
+            $hook = 'IMAGETRANSFER_ADD_FAIL';
+            $msg = json_encode(
+                array(
+                    'error' => $e->getMessage(),
+                    'title' => _('Image Trasfer Create Fail'),
+                )
+            );
+
+            
+            self::$HookManager
+            ->processEvent(
+                $hook,
+                array('ImageTransfer' => &$ImageTransfer)
+            );
+            unset($ImageTransfer);
+            echo $msg;
+        }
     }
 
     /**
@@ -379,8 +478,8 @@ class ImageTransferManagementPage extends FOGPage
      */
     public function addImageTransferPost()
     {
-        $pxelAPI = new PXELApi();
-        $source_desc = filter_input(
+            $pxelAPI = new PXELApi();
+            $source_desc = filter_input(
             INPUT_POST,
             'hidden_srcdesc'
         );
@@ -436,7 +535,7 @@ class ImageTransferManagementPage extends FOGPage
                     'redirect' => _('?node=imagetransfer&sub=activeTransferStatus')
                 )
             );
-
+        
             //Call PXEL API for Image Transfer
             $newTransferId = $ImageTransfer->get('id');
             $requestdata = "{
@@ -446,15 +545,35 @@ class ImageTransferManagementPage extends FOGPage
                 \"transferId\":\"$newTransferId\"
             }";
             $pxelAPI->transferImage($requestdata);
-
+            
+            
         } catch (Exception $e) {
+
+            /*
+             * Update transfer error
+            */
+            if($newTransferId)
+            {
+                self::getClass('ImageTransferManager')
+                ->update(
+                    array('id' => $newTransferId),
+                    '',
+                    array(
+                        'statusID' => '3',
+                        'statusRemark' => $e->getMessage()
+                    )
+                ); 
+            }
+
             $hook = 'IMAGETRANSFER_ADD_FAIL';
             $msg = json_encode(
                 array(
                     'error' => $e->getMessage(),
-                    'title' => _('Image Trasfer Create Fail')
+                    'title' => _('Image Transfer Create Fail'),
+                    'redirect' => _('?node=imagetransfer&sub=imageTransferHistory')
                 )
             );
+            
         }
 
         self::$HookManager

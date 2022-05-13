@@ -39,6 +39,7 @@ var $_GET = getQueryParams(document.location.search),
     form,
     TimeoutRunning,
     submithandlerfunc,
+    submithandlerRedirectfunc,
     files,
     allRadios = $('.primary, .default, .action'),
     radioChecked,
@@ -641,6 +642,8 @@ submithandlerfunc = function(form) {
     });
     return false;
 };
+
+
 /**
  * Gets the checked items so refresh can reset/forms can process.
  */

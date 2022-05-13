@@ -47,6 +47,17 @@ class PXELApi extends FOGBase
     }
 
     /**
+        * PXEL Test API Hosting Server Connection
+        * @return string
+    */
+    public function testAPIConnection()
+    {
+        return $this->CurlCallAPI("GET","api/Health/Status",false);
+    }
+
+
+
+    /**
         * Executing a cURL command (GET, POST) to RESTful API in main thread (For fast response API)    
         * @param string $method call to use
         * @param string $endpoint to request
@@ -115,6 +126,9 @@ class PXELApi extends FOGBase
      */
     public function SocketCallAPI(string $method, string $endpoint, string $apitoken , string $data): void
     {
+        // Test connection to PXEL API Hosting Server
+        $this->testAPIConnection();
+
         $parts = parse_url($this->pxelurl.$endpoint);
         if ($parts === false)
             throw new Exception('Unable to parse URL');
@@ -127,9 +141,8 @@ class PXELApi extends FOGBase
         // Check if Web App able to connect to PXEL Central API
         if ($host === null)
             throw new Exception('Unknown host');
-        $connection = fsockopen($host, $port, $errno, $errstr, 30);
-        if ($connection === false)
-            throw new Exception('Unable to connect to ' . $host);
+        $connection = fsockopen($host, $port, $errno, $errstr, 10);
+
         $method = strtoupper($method);
 
         // Build request
