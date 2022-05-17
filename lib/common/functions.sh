@@ -64,6 +64,11 @@ enableAccessControlPlugin() {
 	#curl -s -k -X POST $httpproto://$ipaddress${webroot}management/activatepluginrun.php?plugin=accesscontrol --stderr - | grep \[accesscontrol\]
 	curl -s -k -X POST --noproxy $ipaddress, $httpproto://$ipaddress${webroot}management/activatepluginrun.php?plugin=accesscontrol --stderr - | grep \[accesscontrol\]
 }
+enableImageTransferPlugin() {
+    [[ -z $webroot ]] && webroot="/"
+    dots "Enabling Image Transfer Plugin"
+	curl -s -k -X POST --noproxy $ipaddress, $httpproto://$ipaddress${webroot}management/activatepluginrun.php?plugin=imagetransfer --stderr - | grep \[imagetransfer\]
+}
 backupDB() {
     dots "Backing up database"
     if [[ -d $backupPath/fog_web_${version}.BACKUP ]]; then
