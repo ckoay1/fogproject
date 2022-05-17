@@ -1912,7 +1912,7 @@ abstract class FOGPage extends FOGBase
             "%s's to remove",
             (
                 $this->childClass !== 'Storage' ?
-                $this->childClass :
+                _($this->childClass) :
                 sprintf(
                     '%s %s',
                     $this->childClass,
@@ -3475,7 +3475,7 @@ abstract class FOGPage extends FOGBase
         echo '<div class="panel panel-info">';
         echo '<div class="panel-heading text-center">';
         echo '<h4 class="title">';
-        echo $this->childClass
+        echo _($this->childClass)
             . ' '
             . _('Membership');
         echo '</h4>';
@@ -3908,7 +3908,7 @@ abstract class FOGPage extends FOGBase
                             ->getHostByMacAddresses($macs);
                         if (self::$Host->isValid()) {
                             throw new Exception(
-                                _('One or more macs are associated with a host')
+                                _('One or more macs are associated with a ') ._('host')
                             );
                         }
                         $primac = array_shift($macs);
@@ -4006,12 +4006,12 @@ abstract class FOGPage extends FOGBase
             sprintf(
                 '%s %ss',
                 _('Successful'),
-                $this->childClass
+                _($this->childClass)    //CES Localization
             ) => $numSuccess,
             sprintf(
                 '%s %ss',
                 _('Failed'),
-                $this->childClass
+                _($this->childClass)    //CES Localization
             ) => $numFailed,
             _('Errors') => $uploadErrors,
         );

@@ -71,7 +71,7 @@ class TaskManagementPage extends FOGPage
                 _('Hostname'),
                 _('MAC')
             ),*/
-            _('Hostname MAC'), //CES_CUSTOMIZATION 20220302 remove css for localization
+            _('Nodename MAC'), //CES_CUSTOMIZATION 20220302 remove css for localization
             _('Image Name'),
             _('Start Time'),
             _('Working with storage node'), //CES_CUSTOMIZATION 20220302 add "storage" to avoid confuse with node

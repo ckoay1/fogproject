@@ -3758,3 +3758,17 @@ $this->schema[] = array(
     . "`settingDesc`='Compression Format Setting (Default to Partclone Zstd)', `settingValue`=5 "
     . "WHERE `settingKey`='FOG_IMAGE_COMPRESSION_FORMAT_DEFAULT' AND `settingValue`=0"
 );
+
+
+// 271
+$this->schema[] = array(
+    "INSERT IGNORE INTO `globalSettings` "
+    . "(`settingKey`,`settingDesc`,`settingValue`,`settingCategory`) "
+    . "VALUES "
+    . "('PXEL_API_URL',"
+    . "'PXEL Central API URL',"
+    . "'http://pggwww1017.gar.corp.intel.com/','General Settings'),"
+    . "('PXEL_API_KEY',"
+    . "'PXEL Central API Auth Key',"
+    . "'f0a062eb-41ba-40e6-b841-6b29bf5ccdd6','General Settings')"
+);

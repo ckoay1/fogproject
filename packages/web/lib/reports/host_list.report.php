@@ -144,7 +144,7 @@ class Host_List extends ReportManagementPage
      */
     public function filePost()
     {
-        $this->title = _('Host Listing Export');
+        $this->title = _('Host') .' ' ._('Listing Export');
         $groupsearch = filter_input(
             INPUT_POST,
             'groupsearch'

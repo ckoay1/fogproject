@@ -1428,9 +1428,25 @@ abstract class FOGManagerController extends FOGBase
      *
      * @return bool
      */
+    public function truncateTable()
+    {
+        $sql = sprintf(
+            'TRUNCATE TABLE %s ',
+            $this->tablename
+        );
+        return self::$DB->query($sql);
+    }
+
+    
+    /**
+     * Truncate the table.
+     *
+     * @return bool
+     */
     public function uninstall()
     {
         $sql = Schema::dropTable($this->tablename);
         return self::$DB->query($sql);
     }
+
 }

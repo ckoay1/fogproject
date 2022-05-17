@@ -250,7 +250,9 @@ class AccessControlRuleManager extends FOGManagerController
 
             //others
             . '(75, "MAIN_MENU-accesscontrol", "SUB_MENULINK", '
-            . '"accesscontrol", "main", "fog", NOW(), "")'
+            . '"accesscontrol", "main", "fog", NOW(), ""),'
+            . '(76, "FEATURE-imagetransfer", "FEATURE", '
+            . '"all-site-transfer", "", "fog", NOW(), "")'
 
             //CES_CUSTOMIZATION 20220302 END
             ;

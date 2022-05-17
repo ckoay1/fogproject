@@ -39,6 +39,7 @@ var $_GET = getQueryParams(document.location.search),
     form,
     TimeoutRunning,
     submithandlerfunc,
+    submithandlerRedirectfunc,
     files,
     allRadios = $('.primary, .default, .action'),
     radioChecked,
@@ -629,12 +630,20 @@ submithandlerfunc = function(form) {
                 },
                 onhidden: function(dialogRef) {
                     clearTimeout(bootstrapdialogopen);
+                    //CES_CUSTOMIZATION REDIRECT IF PARA PROVIDED START
+                    if(data.redirect)
+                    {
+                        location.href = data.redirect;
+                    }
+                    //CES_CUSTOMIZATION REDIRECT IF PARA PROVIDED END
                 }
             });
         }
     });
     return false;
 };
+
+
 /**
  * Gets the checked items so refresh can reset/forms can process.
  */

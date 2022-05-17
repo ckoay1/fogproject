@@ -2480,7 +2480,7 @@ class HostManagementPage extends FOGPage
             . _('Update')
             . '</button>'
         );
-        $this->title = _('Host Hardware Inventory');
+        $this->title = _('Host') .' ' ._('Hardware Inventory');
         if ($this->obj->get('inventory')->isValid()) {
             array_walk($fields, $this->fieldsToData);
         }
@@ -2792,7 +2792,7 @@ class HostManagementPage extends FOGPage
         echo '<div class="panel panel-info">';
         echo '<div class="panel-heading text-center">';
         echo '<h4 class="title">';
-        echo _('Host Login History');
+        echo _('Host') .' ' ._('Login History');
         echo '</h4>';
         echo '</div>';
         echo '<div class="panel-body">';
@@ -2855,7 +2855,7 @@ class HostManagementPage extends FOGPage
             $this->attributes
         );
         $this->headerData = array(
-            _('Engineer'),
+            _('Create By'),
             _('Imaged From'),
             _('Start'),
             _('End'),
@@ -2982,7 +2982,7 @@ class HostManagementPage extends FOGPage
         echo '<div class="panel panel-info">';
         echo '<div class="panel-heading text-center">';
         echo '<h4 class="title">';
-        echo _('Host Imaging History');
+        echo _('Host') .' ' ._('Imaging History');
         echo '</h4>';
         echo '</div>';
         echo '<div class="panel-body">';
@@ -3737,14 +3737,14 @@ class HostManagementPage extends FOGPage
             $msg = json_encode(
                 array(
                     'msg' => _('Successfully added selected hosts to the group!'),
-                    'title' => _('Host Add to Group Success')
+                    'title' => _('Host') ._(' Add to Group Success')
                 )
             );
         } catch (Exception $e) {
             $msg = json_encode(
                 array(
                     'error' => $e->getMessage(),
-                    'title' => _('Host Add to Group Fail')
+                    'title' => _('Host') ._(' Add to Group Fail')
                 )
             );
         }

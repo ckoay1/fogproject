@@ -104,7 +104,8 @@ class AccessControlRuleAssociationManager extends FOGManagerController
                 . "(26, '', 3, 69),"
                 . "(27, '', 3, 70),"
                 . "(28, '', 3, 71),"
-                . "(29, '', 3, 75)",
+                . "(29, '', 3, 75),"
+                . "(30, '', 3, 76)",
                 $this->tablename
             );
             self::$DB->query($sql);
