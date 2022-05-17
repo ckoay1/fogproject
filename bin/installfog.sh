@@ -631,6 +631,7 @@ while [[ -z $blGo ]]; do
                     linkOptFogDir
                     updateStorageNodeCredentials
                     enableAccessControlPlugin
+					enableImageTransferPlugin
                     echo
                     echo " * Setup complete"
                     echo
