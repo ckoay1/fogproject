@@ -28,8 +28,8 @@ header('X-Content-Type-Options: nosniff');
 header('Strict-Transport-Security: max-age=31536000');
 header(
     "Content-Security-Policy: default-src 'none';"
-    . "script-src 'self' 'unsafe-eval';"
-    . "connect-src 'self';"
+    . "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.azure.com;"
+    . "connect-src 'self' https://*.applicationinsights.azure.com;"
     . "img-src 'self' data:;"
     . "style-src 'self' 'unsafe-inline';"
     . "font-src 'self';"
