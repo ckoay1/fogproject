@@ -388,6 +388,10 @@ echo "Done"
 [[ -z $armsupport ]] && armsupport=0
 [[ -z $mysqldbname ]] && mysqldbname="fog"
 [[ -z $fogpriorconfig ]] && fogpriorconfig="$fogprogramdir/.fogsettings"
+#CES_CUSTOMIZATION 20220527
+[[ -z $snmysqlport ]] && snmysqlport="3306"
+[[ -z $snmysqlsslcapath ]] && snmysqlsslcapath=""
+#CES_CUSTOMIZATION 20220527
 #clearScreen
 if [[ -z $* || $* != +(-h|-?|--help|--uninstall) ]]; then
     echo > "$workingdir/error_logs/foginstall.log"

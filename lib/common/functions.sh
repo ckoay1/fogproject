@@ -1510,7 +1510,7 @@ configureStorage() {
         echo "## Syntax of post download scripts are" >>"$storageLocation/postdownloadscripts/fog.postdownload"
         echo "#. \${postdownpath}<SCRIPTNAME>" >> "$storageLocation/postdownloadscripts/fog.postdownload"
         echo ". \${postdownpath}/fog.renamehost" >> "$storageLocation/postdownloadscripts/fog.postdownload"
-        cp fog.renamehost $storageLocation/postdownloadscripts/fog.renamehost
+        cp fog.renamehost $storageLocation/postdownloadscripts/fog.renamehost		
     fi
     [[ ! -d $storageLocationCapture ]] && mkdir $storageLocationCapture >>$workingdir/error_logs/fog_error_${version}.log 2>&1
     [[ ! -f $storageLocationCapture/.mntcheck ]] && touch $storageLocationCapture/.mntcheck >>$workingdir/error_logs/fog_error_${version}.log 2>&1
@@ -1556,6 +1556,10 @@ writeUpdateFile() {
     sedescsnmysqlpass=$(echo "$escsnmysqlpass" | sed -e 's/[\&/]/\\&/g')  # then prefix every \ & and / with \ for sed escaping
     escsnmysqlhost=$(echo $snmysqlhost | sed -e $replace)
     escmysqldbname=$(echo $mysqldbname | sed -e $replace)
+	#CES_CUSTOMIZATION 20220527
+    escsnmysqlport=$(echo "3306" | sed -e $replace)
+    escsnmysqlsslcapath=$(echo "/opt/fog/dbaas.pem" | sed -e $replace)
+	#CES_CUSTOMIZATION 20220527			
     escinstalllang=$(echo $installlang | sed -e $replace)
     escstorageLocation=$(echo $storageLocation | sed -e $replace)
     escfogupdateloaded=$(echo $fogupdateloaded | sed -e $replace)
@@ -1576,6 +1580,9 @@ writeUpdateFile() {
     escphp_verAdds=$(echo $php_verAdds | sed -e $replace)
     escsslprivkey=$(echo $sslprivkey | sed -e $replace)
     [[ -z $copybackold || $copybackold -lt 1 ]] && copybackold=0
+	#CES_CUSTOMIZATION 20220527	
+	cp dbaas.pem $fogprogramdir/dbaas.pem
+	#CES_CUSTOMIZATION 20220527	
     if [[ -f $fogprogramdir/.fogsettings ]]; then
         grep -q "^## Start of FOG Settings" $fogprogramdir/.fogsettings || grep -q "^## Version:.*" $fogprogramdir/.fogsettings
         if [[ $? == 0 ]]; then
@@ -1642,6 +1649,14 @@ writeUpdateFile() {
             grep -q "mysqldbname=" $fogprogramdir/.fogsettings && \
                 sed -i "s/mysqldbname=.*/mysqldbname='$escmysqldbname'/g" $fogprogramdir/.fogsettings || \
                 echo "mysqldbname='$mysqldbname'" >> $fogprogramdir/.fogsettings
+			#CES_CUSTOMIZATION 20220527
+            grep -q "snmysqlport=" $fogprogramdir/.fogsettings && \
+                sed -i "s/snmysqlport=.*/snmysqlport='$escsnmysqlport'/g" $fogprogramdir/.fogsettings || \
+                echo "snmysqlport='$snmysqlport'" >> $fogprogramdir/.fogsettings
+            grep -q "snmysqlsslcapath=" $fogprogramdir/.fogsettings && \
+                sed -i "s/snmysqlsslcapath=.*/snmysqlsslcapath='$escsnmysqlsslcapath'/g" $fogprogramdir/.fogsettings || \
+                echo "snmysqlsslcapath='$snmysqlsslcapath'" >> $fogprogramdir/.fogsettings
+			#CES_CUSTOMIZATION 20220527		
             grep -q "installlang=" $fogprogramdir/.fogsettings && \
                 sed -i "s/installlang=.*/installlang='$escinstalllang'/g" $fogprogramdir/.fogsettings || \
                 echo "installlang='$installlang'" >> $fogprogramdir/.fogsettings
@@ -1733,6 +1748,10 @@ writeUpdateFile() {
             echo "snmysqlpass='$escsnmysqlpass'" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlhost='$snmysqlhost'" >> "$fogprogramdir/.fogsettings"
             echo "mysqldbname='$mysqldbname'" >> "$fogprogramdir/.fogsettings"
+			#CES_CUSTOMIZATION 20220527
+            echo "snmysqlport=$snmysqlport" >> "$fogprogramdir/.fogsettings"
+            echo "snmysqlsslcapath=$snmysqlsslcapath" >> "$fogprogramdir/.fogsettings"
+			#CES_CUSTOMIZATION 20220527
             echo "installlang='$installlang'" >> "$fogprogramdir/.fogsettings"
             echo "storageLocation='$storageLocation'" >> "$fogprogramdir/.fogsettings"
             echo "fogupdateloaded=1" >> "$fogprogramdir/.fogsettings"
@@ -1781,6 +1800,10 @@ writeUpdateFile() {
         echo "snmysqlpass='$escsnmysqlpass'" >> "$fogprogramdir/.fogsettings"
         echo "snmysqlhost='$snmysqlhost'" >> "$fogprogramdir/.fogsettings"
         echo "mysqldbname='$mysqldbname'" >> "$fogprogramdir/.fogsettings"
+		#CES_CUSTOMIZATION 20220527
+		echo "snmysqlport='3306'" >> "$fogprogramdir/.fogsettings"
+		echo "snmysqlsslcapath='/opt/fog/dbaas.pem'" >> "$fogprogramdir/.fogsettings"
+		#CES_CUSTOMIZATION 20220527
         echo "installlang='$installlang'" >> "$fogprogramdir/.fogsettings"
         echo "storageLocation='$storageLocation'" >> "$fogprogramdir/.fogsettings"
         echo "fogupdateloaded=1" >> "$fogprogramdir/.fogsettings"
@@ -2250,6 +2273,8 @@ class Config
         define('DATABASE_NAME', '$mysqldbname');
         define('DATABASE_USERNAME', '$snmysqluser');
         define('DATABASE_PASSWORD', '$phpescsnmysqlpass');
+        define('DATABASE_PORT', '$snmysqlport');
+        define('DATABASE_SSLPATH', '$snmysqlsslcapath');
     }
     /**
      * Defines the service settings
