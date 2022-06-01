@@ -78,6 +78,7 @@ class PDODB extends DatabaseManager
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => true,
         PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false
+        ,DATABASE_SSLCAPATH == "" ? "" : PDO::MYSQL_ATTR_SSL_CA => DATABASE_SSLCAPATH //CES_CUSTOMIZATION 20220527
     );
     /**
      * Initializes the PDODB class
@@ -149,11 +150,13 @@ class PDODB extends DatabaseManager
             $host = preg_replace('#p:#i', '', DATABASE_HOST);
             $user = DATABASE_USERNAME;
             $pass = DATABASE_PASSWORD;
+            $port = DATABASE_PORT;  //CES_CUSTOMIZATION 20220527
             $dsn = sprintf(
-                '%s:host=%s;dbname=%s;charset=utf8',
+                '%s:host=%s;dbname=%s;port=%s;charset=utf8',
                 $type,
                 $host,
                 self::$_dbName
+                ,$port  //CES_CUSTOMIZATION 20220527
             );
             if (!$dbexists) {
                 $dsn = sprintf(

@@ -1557,8 +1557,11 @@ writeUpdateFile() {
     escsnmysqlhost=$(echo $snmysqlhost | sed -e $replace)
     escmysqldbname=$(echo $mysqldbname | sed -e $replace)
 	#CES_CUSTOMIZATION 20220527
-    escsnmysqlport=$(echo "3306" | sed -e $replace)
-    escsnmysqlsslcapath=$(echo "/opt/fog/dbaas.pem" | sed -e $replace)
+    escsnmysqlrootuser=$(echo $snmysqlrootuser | sed -e $replace)
+    escsnmysqlrootpass=$(echo $snmysqlrootpass | sed -e $replace)
+    escsnmysqlexternal=$(echo $snmysqlexternal | sed -e $replace)
+    escsnmysqlport=$(echo $snmysqlport | sed -e $replace)
+    escsnmysqlsslcapath=$(echo $snmysqlsslcapath | sed -e $replace)
 	#CES_CUSTOMIZATION 20220527			
     escinstalllang=$(echo $installlang | sed -e $replace)
     escstorageLocation=$(echo $storageLocation | sed -e $replace)
@@ -1650,6 +1653,15 @@ writeUpdateFile() {
                 sed -i "s/mysqldbname=.*/mysqldbname='$escmysqldbname'/g" $fogprogramdir/.fogsettings || \
                 echo "mysqldbname='$mysqldbname'" >> $fogprogramdir/.fogsettings
 			#CES_CUSTOMIZATION 20220527
+            grep -q "snmysqlrootuser=" $fogprogramdir/.fogsettings && \
+                sed -i "s/snmysqlrootuser=.*/snmysqlrootuser='$escsnmysqlrootuser'/g" $fogprogramdir/.fogsettings || \
+                echo "snmysqlrootuser='$snmysqlrootuser'" >> $fogprogramdir/.fogsettings     
+            grep -q "snmysqlrootpass=" $fogprogramdir/.fogsettings && \
+                sed -i "s/snmysqlrootpass=.*/snmysqlrootpass='$escsnmysqlrootpass'/g" $fogprogramdir/.fogsettings || \
+                echo "snmysqlrootpass='$snmysqlrootpass'" >> $fogprogramdir/.fogsettings
+            grep -q "snmysqlexternal=" $fogprogramdir/.fogsettings && \
+                sed -i "s/snmysqlexternal=.*/snmysqlexternal='$escsnmysqlexternal'/g" $fogprogramdir/.fogsettings || \
+                echo "snmysqlexternal='$snmysqlexternal'" >> $fogprogramdir/.fogsettings
             grep -q "snmysqlport=" $fogprogramdir/.fogsettings && \
                 sed -i "s/snmysqlport=.*/snmysqlport='$escsnmysqlport'/g" $fogprogramdir/.fogsettings || \
                 echo "snmysqlport='$snmysqlport'" >> $fogprogramdir/.fogsettings
@@ -1749,6 +1761,9 @@ writeUpdateFile() {
             echo "snmysqlhost='$snmysqlhost'" >> "$fogprogramdir/.fogsettings"
             echo "mysqldbname='$mysqldbname'" >> "$fogprogramdir/.fogsettings"
 			#CES_CUSTOMIZATION 20220527
+            echo "snmysqlrootuser=$snmysqlrootuser" >> "$fogprogramdir/.fogsettings"
+            echo "snmysqlrootpass=$snmysqlrootpass" >> "$fogprogramdir/.fogsettings"
+            echo "snmysqlexternal=$snmysqlexternal" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlport=$snmysqlport" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlsslcapath=$snmysqlsslcapath" >> "$fogprogramdir/.fogsettings"
 			#CES_CUSTOMIZATION 20220527
@@ -1801,8 +1816,11 @@ writeUpdateFile() {
         echo "snmysqlhost='$snmysqlhost'" >> "$fogprogramdir/.fogsettings"
         echo "mysqldbname='$mysqldbname'" >> "$fogprogramdir/.fogsettings"
 		#CES_CUSTOMIZATION 20220527
-		echo "snmysqlport='3306'" >> "$fogprogramdir/.fogsettings"
-		echo "snmysqlsslcapath='/opt/fog/dbaas.pem'" >> "$fogprogramdir/.fogsettings"
+        echo "snmysqlrootuser='$snmysqlrootuser'" >> "$fogprogramdir/.fogsettings"
+        echo "snmysqlrootpass='$snmysqlrootpass'" >> "$fogprogramdir/.fogsettings"
+        echo "snmysqlexternal='$snmysqlexternal'" >> "$fogprogramdir/.fogsettings"
+		echo "snmysqlport=''" >> "$fogprogramdir/.fogsettings"
+		echo "snmysqlsslcapath=''" >> "$fogprogramdir/.fogsettings"
 		#CES_CUSTOMIZATION 20220527
         echo "installlang='$installlang'" >> "$fogprogramdir/.fogsettings"
         echo "storageLocation='$storageLocation'" >> "$fogprogramdir/.fogsettings"
@@ -2274,7 +2292,7 @@ class Config
         define('DATABASE_USERNAME', '$snmysqluser');
         define('DATABASE_PASSWORD', '$phpescsnmysqlpass');
         define('DATABASE_PORT', '$snmysqlport');
-        define('DATABASE_SSLPATH', '$snmysqlsslcapath');
+        define('DATABASE_SSLCAPATH', '$snmysqlsslcapath');
     }
     /**
      * Defines the service settings
