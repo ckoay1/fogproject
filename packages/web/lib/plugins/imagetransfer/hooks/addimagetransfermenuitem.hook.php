@@ -79,7 +79,7 @@ class AddImageTransferMenuItem extends Hook
             return;
         }
         self::arrayInsertAfter(
-            'storage',
+            'image',
             $arguments['main'],
             $this->node,
             array(
@@ -89,7 +89,7 @@ class AddImageTransferMenuItem extends Hook
         );
     }
     /**
-     * Adds the Access Control page to search elements.
+     * Adds the Image Transfer page to search elements.
      *
      * @param mixed $arguments The arguments to change.
      *
