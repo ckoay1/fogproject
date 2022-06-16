@@ -383,7 +383,7 @@ class ImageTransferManagementPage extends FOGPage
                 . '</label>' => '<label for="source_value">'
                 . $source_desc
                 . '</label>'
-                . '<input type="hidden" name="hidden_srcdesc" value="'.$source_desc  .'"/>',
+                . '<input type="hidden" name="srcdesc" value="'.$source_desc  .'"/>',
                 '<label for="destination">'
                 . _('Destination')
                 . '</label>' => '<label for="destination_value">'
