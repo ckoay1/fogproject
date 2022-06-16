@@ -32,7 +32,16 @@ checkDatabaseConnection() {
     dots "Checking connection to master database"
     [[ -n $snmysqlhost ]] && host="--host=$snmysqlhost"
     sqloptionsuser="${host} -s --user=${snmysqluser}"
-    mysql $sqloptionsuser --password="${snmysqlpass}" --execute="quit" >/dev/null 2>&1
+	#ORI_20220607 mysql $sqloptionsuser --password="${snmysqlpass}" --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    sqloptionsexternal=""
+    if [[ $snmysqlexternal == "DBAAS" ]]; then
+        sqloptionsexternal="--port=${snmysqlport} --ssl-ca=${snmysqlsslcapath}"
+    else
+        sqloptionsexternal="--port=${snmysqlport}"
+    fi
+    mysql $sqloptionsuser --password="${snmysqlpass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+	#CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     errorStat $?
 }
 registerStorageNode() {
@@ -71,21 +80,44 @@ enableImageTransferPlugin() {
 }
 backupDB() {
     dots "Backing up database"
-    if [[ -d $backupPath/fog_web_${version}.BACKUP ]]; then
-        [[ ! -d $backupPath/fogDBbackups ]] && mkdir -p $backupPath/fogDBbackups >>$workingdir/error_logs/fog_error_${version}.log 2>&1
-        wget --no-check-certificate -O $backupPath/fogDBbackups/fog_sql_${version}_$(date +"%Y%m%d_%I%M%S").sql "${httpproto}://$ipaddress/$webroot/maintenance/backup_db.php" --post-data="type=sql&fogajaxonly=1" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
-    fi
-    if [[ $? -ne 0 ]]; then
-        echo "Failed"
-        if [[ -z $autoaccept ]]; then
-            echo
-            echo "   We were not able to backup the current database! Just press"
-            echo "   [Enter] to proceed anyway or Ctrl+C to stop the installer."
-            read
-        fi
+
+	#ORI_20220607 if [[ -d $backupPath/fog_web_${version}.BACKUP ]]; then
+    #ORI_20220607     [[ ! -d $backupPath/fogDBbackups ]] && mkdir -p $backupPath/fogDBbackups >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #ORI_20220607     wget --no-check-certificate -O $backupPath/fogDBbackups/fog_sql_${version}_$(date +"%Y%m%d_%I%M%S").sql "${httpproto}://$ipaddress/$webroot/maintenance/backup_db.php" --post-data="type=sql&fogajaxonly=1" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #ORI_20220607 fi
+    #ORI_20220607 if [[ $? -ne 0 ]]; then
+    #ORI_20220607     echo "Failed"
+    #ORI_20220607     if [[ -z $autoaccept ]]; then
+    #ORI_20220607         echo
+    #ORI_20220607         echo "   We were not able to backup the current database! Just press"
+    #ORI_20220607         echo "   [Enter] to proceed anyway or Ctrl+C to stop the installer."
+    #ORI_20220607         read
+    #ORI_20220607     fi
+    #ORI_20220607 else
+    #ORI_20220607     echo "Done"
+    #ORI_20220607 fi
+
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    if [[ $snmysqlexternal == "DBAAS" ]]; then
+        echo "Will not backup for DBAAS"
     else
-        echo "Done"
+        if [[ -d $backupPath/fog_web_${version}.BACKUP ]]; then
+            [[ ! -d $backupPath/fogDBbackups ]] && mkdir -p $backupPath/fogDBbackups >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+            wget --no-check-certificate -O $backupPath/fogDBbackups/fog_sql_${version}_$(date +"%Y%m%d_%I%M%S").sql "${httpproto}://$ipaddress/$webroot/maintenance/backup_db.php" --post-data="type=sql&fogajaxonly=1" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+        fi
+        if [[ $? -ne 0 ]]; then
+            echo "Failed"
+            if [[ -z $autoaccept ]]; then
+                echo
+                echo "   We were not able to backup the current database! Just press"
+                echo "   [Enter] to proceed anyway or Ctrl+C to stop the installer."
+                read
+            fi
+        else
+            echo "Done"
+        fi
     fi
+	#CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
 }
 updateDB() {
     case $dbupdate in
@@ -109,20 +141,40 @@ updateDB() {
             ;;
     esac
     dots "Update fogstorage database password"
-    mysql $sqloptionsuser --password="${snmysqlpass}" --execute="INSERT INTO globalSettings (settingKey, settingDesc, settingValue, settingCategory) VALUES ('FOG_STORAGENODE_MYSQLPASS', 'This setting defines the password the storage nodes should use to connect to the fog server.', \"$snmysqlstoragepass\", 'FOG Storage Nodes') ON DUPLICATE KEY UPDATE settingValue=\"$snmysqlstoragepass\"" $mysqldbname >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+	#ORI_20220607 mysql $sqloptionsuser --password="${snmysqlpass}" --execute="INSERT INTO globalSettings (settingKey, settingDesc, settingValue, settingCategory) VALUES ('FOG_STORAGENODE_MYSQLPASS', 'This setting defines the password the storage nodes should use to connect to the fog server.', \"$snmysqlstoragepass\", 'FOG Storage Nodes') ON DUPLICATE KEY UPDATE settingValue=\"$snmysqlstoragepass\"" $mysqldbname >>$workingdir/error_logs/fog_error_${version}.log 2>&1 
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    sqloptionsexternal=""
+    if [[ $snmysqlexternal == "DBAAS" ]]; then
+        sqloptionsexternal="--port=${snmysqlport} --ssl-ca=${snmysqlsslcapath}"
+    else
+        sqloptionsexternal="--port=${snmysqlport}"
+    fi
+    
+    mysql $sqloptionsuser --password="${snmysqlpass}" $sqloptionsexternal --execute="INSERT INTO globalSettings (settingKey, settingDesc, settingValue, settingCategory) VALUES ('FOG_STORAGENODE_MYSQLPASS', 'This setting defines the password the storage nodes should use to connect to the fog server.', \"$snmysqlstoragepass\", 'FOG Storage Nodes') ON DUPLICATE KEY UPDATE settingValue=\"$snmysqlstoragepass\"" $mysqldbname >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
+
     errorStat $?
     dots "Granting access to fogstorage database user"
-    mysql ${host} -s --user=fogstorage --password="${snmysqlstoragepass}" --execute="INSERT INTO $mysqldbname.taskLog VALUES ( 0, '999test', 3, '127.0.0.1', NOW(), 'fog');" >/dev/null 2>&1
+    #ORI_20220607 mysql ${host} -s --user=fogstorage --password="${snmysqlstoragepass}" --execute="INSERT INTO $mysqldbname.taskLog VALUES ( 0, '999test', 3, '127.0.0.1', NOW(), 'fog');" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    mysql ${host} -s --user=fogstorage --password="${snmysqlstoragepass}" $sqloptionsexternal --execute="INSERT INTO $mysqldbname.taskLog VALUES ( 0, '999test', 3, '127.0.0.1', NOW(), 'fog');" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     connect_as_fogstorage=$?
     if [[ $connect_as_fogstorage -eq 0 ]]; then
-        mysql $sqloptionsuser --password="${snmysqlpass}" --execute="DELETE FROM $mysqldbname.taskLog WHERE taskID='999test' AND ip='127.0.0.1';" >/dev/null 2>&1
+        #ORI_20220607 mysql $sqloptionsuser --password="${snmysqlpass}" --execute="DELETE FROM $mysqldbname.taskLog WHERE taskID='999test' AND ip='127.0.0.1';" >/dev/null 2>&1
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+        mysql $sqloptionsuser --password="${snmysqlpass}" $sqloptionsexternal --execute="DELETE FROM $mysqldbname.taskLog WHERE taskID='999test' AND ip='127.0.0.1';" >/dev/null 2>&1
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
         echo "Skipped"
         return
     fi
 
     # we still need to grant access for the fogstorage DB user
     # and therefore need root DB access
-    mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="quit" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     if [[ $? -ne 0 ]]; then
         echo
         echo "   To improve the overall security the installer will restrict"
@@ -133,12 +185,18 @@ updateDB() {
         read -rs snmysqlrootpass
         echo
         echo
-        mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+        #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+        mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
         if [[ $? -ne 0 ]]; then
             echo "   Unable to connect to the database using the given password!"
             echo -n "   Try again: "
             read -rs snmysqlrootpass
-            mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+            #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+            #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+            mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+            #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
             if [[ $? -ne 0 ]]; then
                 echo
                 echo "   Failed! Terminating installer now."
@@ -164,8 +222,19 @@ GRANT INSERT,UPDATE ON $mysqldbname.imagingLog TO 'fogstorage'@'%' ;
 FLUSH PRIVILEGES ;
 SET SQL_MODE=@OLD_SQL_MODE ;
 EOF
-    mysql $sqloptionsroot --password="${snmysqlrootpass}" <../tmp/fog-db-grant-fogstorage-access.sql >>$workingdir/error_logs/fog_error_${version}.log 2>&1
-    errorStat $?
+
+    #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" <../tmp/fog-db-grant-fogstorage-access.sql >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #ORI_20220607 errorStat $?
+
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    if [[ $snmysqlexternal != "DBAAS" ]]; then
+        mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal <../tmp/fog-db-grant-fogstorage-access.sql >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+        errorStat $?
+    else
+        echo "Skipped (DBAAS)"
+        return
+    fi
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
 }
 validip() {
     local ip=$1
@@ -547,10 +616,21 @@ configureTFTPandPXE() {
     if [[ $noTftpBuild != "true" ]]; then
         echo -e "# default: off\n# description: The tftp server serves files using the trivial file transfer \n#    protocol.  The tftp protocol is often used to boot diskless \n# workstations, download configuration files to network-aware printers, \n#   and to start the installation process for some operating systems.\nservice tftp\n{\n    socket_type     = dgram\n   protocol        = udp\n wait            = yes\n user            = root\n    server          = /usr/sbin/in.tftpd\n  server_args     = -s ${tftpdirdst}\n    disable         = no\n  per_source      = 11\n  cps         = 100 2\n   flags           = IPv4\n}" > "$tftpconfig"
     fi
+
+    #CES_CUSTOMIZATION_IPV6 20220607 START
+    #WILL USE IPV4 if V6 IS DISABLED
+    ipv6_disable=$(cat /sys/module/ipv6/parameters/disable)
+    tftp_option=""
+    if [[ $ipv6_disable -eq "1" ]]; then
+        tftp_option="-4"
+    fi
+    #CES_CUSTOMIZATION_IPV6 20220607 END
+
     case $systemctl in
         yes)
             if [[ $osid -eq 2 && -f $tftpconfigupstartdefaults ]]; then
-                echo -e "# /etc/default/tftpd-hpa\n# FOG Modified version\nTFTP_USERNAME=\"root\"\nTFTP_DIRECTORY=\"/tftpboot\"\nTFTP_ADDRESS=\":69\"\nTFTP_OPTIONS=\"-s\"" > "$tftpconfigupstartdefaults"
+                #echo -e "# /etc/default/tftpd-hpa\n# FOG Modified version\nTFTP_USERNAME=\"root\"\nTFTP_DIRECTORY=\"/tftpboot\"\nTFTP_ADDRESS=\":69\"\nTFTP_OPTIONS=\"-s\"" > "$tftpconfigupstartdefaults"
+                echo -e "# /etc/default/tftpd-hpa\n# FOG Modified version\nTFTP_USERNAME=\"root\"\nTFTP_DIRECTORY=\"/tftpboot\"\nTFTP_ADDRESS=\":69\"\nTFTP_OPTIONS=\"-s " $tftp_option  "\"" > "$tftpconfigupstartdefaults"
                 systemctl disable xinetd >>$workingdir/error_logs/fog_error_${version}.log 2>&1
                 systemctl enable tftpd-hpa >>$workingdir/error_logs/fog_error_${version}.log 2>&1
                 systemctl stop xinetd >>$workingdir/error_logs/fog_error_${version}.log 2>&1
@@ -571,7 +651,8 @@ configureTFTPandPXE() {
             ;;
         *)
             if [[ $osid -eq 2 && -f $tftpconfigupstartdefaults ]]; then
-                echo -e "# /etc/default/tftpd-hpa\n# FOG Modified version\nTFTP_USERNAME=\"root\"\nTFTP_DIRECTORY=\"/tftpboot\"\nTFTP_ADDRESS=\":69\"\nTFTP_OPTIONS=\"-s\"" > "$tftpconfigupstartdefaults"
+                #echo -e "# /etc/default/tftpd-hpa\n# FOG Modified version\nTFTP_USERNAME=\"root\"\nTFTP_DIRECTORY=\"/tftpboot\"\nTFTP_ADDRESS=\":69\"\nTFTP_OPTIONS=\"-s \"" > "$tftpconfigupstartdefaults"
+                echo -e "# /etc/default/tftpd-hpa\n# FOG Modified version\nTFTP_USERNAME=\"root\"\nTFTP_DIRECTORY=\"/tftpboot\"\nTFTP_ADDRESS=\":69\"\nTFTP_OPTIONS=\"-s " $tftp_option "\"" > "$tftpconfigupstartdefaults"
                 sysv-rc-conf xinetd off >>$workingdir/error_logs/fog_error_${version}.log 2>&1
                 service xinetd stop >>$workingdir/error_logs/fog_error_${version}.log 2>&1
                 sysv-rc-conf tftpd-hpa on >>$workingdir/error_logs/fog_error_${version}.log 2>&1
@@ -1139,16 +1220,43 @@ configureMySql() {
     [[ "x$snmysqluser" == "xroot" ]] && snmysqluser='fogmaster'
     [[ -z $snmysqlpass ]] && snmysqlpass=$(generatePassword 20)
     [[ -n $snmysqlhost ]] && host="--host=$snmysqlhost"
-    sqloptionsroot="${host} --user=root"
+    #ORI_20220607 sqloptionsroot="${host} --user=root"
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    if [[ $snmysqlrootuser == "" ]]; then
+        sqloptionsroot="${host} --user=root"
+    else
+        sqloptionsroot="${host} --user=$snmysqlrootuser" 
+    fi
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     sqloptionsuser="${host} -s --user=${snmysqluser}"
-    mysqladmin $host ping >/dev/null 2>&1 || mysqladmin $host ping >/dev/null 2>&1 || mysqladmin $host ping >/dev/null 2>&1
+    #ORI_20220607 mysqladmin $host ping >/dev/null 2>&1 || mysqladmin $host ping >/dev/null 2>&1 || mysqladmin $host ping >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    sqloptionsexternal=""
+    if [[ $snmysqlexternal == "DBAAS" ]]; then
+        sqloptionsexternal="--port=${snmysqlport} --ssl-ca=${snmysqlsslcapath}"
+    else
+        if [[ $snmysqlport == "" ]]; then
+            snmysqlport="3306"
+        fi
+        sqloptionsexternal="--port=${snmysqlport}"
+    fi
+    mysqladmin $host --user=${snmysqluser} --password=${snmysqlpass} $sqloptionsexternal ping >/dev/null 2>&1 || mysqladmin $host --user=${snmysqluser} --password=${snmysqlpass} $sqloptionsexternal ping >/dev/null 2>&1 || mysqladmin $host --user=${snmysqluser} --password=${snmysqlpass} $sqloptionsexternal ping >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     errorStat $?
 
     dots "Setting up MySQL user and database"
-    mysql $sqloptionsroot --execute="quit" >/dev/null 2>&1
+    #ORI_20220607 mysql $sqloptionsroot --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    mysql $sqloptionsroot --password=${snmysqlpass} $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     connect_as_root=$?
-    if [[ $connect_as_root -eq 0 ]]; then
-        mysqlrootauth=$(mysql $sqloptionsroot --database=mysql --execute="SELECT Host,User,plugin FROM user WHERE Host='localhost' AND User='root' AND plugin='unix_socket'")
+
+    #ORI_20220607 if [[ $connect_as_root -eq 0 ]]; then
+    if [[ $connect_as_root -eq 0 && $snmysqlexternal -ne "DBAAS" ]]; then #CES_CUSTOMIZATION_EXTERNAL_DB 20220607
+        #ORI_20220607 mysqlrootauth=$(mysql $sqloptionsroot --database=mysql --execute="SELECT Host,User,plugin FROM user WHERE Host='localhost' AND User='root' AND plugin='unix_socket'")
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+        mysqlrootauth=$(mysql $sqloptionsroot --password=${snmysqlpass} $sqloptionsexternal --database=mysql --execute="SELECT Host,User,plugin FROM user WHERE Host='localhost' AND User='root' AND plugin='unix_socket'")
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
         if [[ -z $mysqlrootauth && -z $autoaccept ]]; then
             echo
             echo "   The installer detected a blank database *root* password. This"
@@ -1185,15 +1293,30 @@ configureMySql() {
             # automatically which was not the case in MariaDB 10.1 and is causing trouble.
             # So now we try to be more conservative and only reset the pass when we get one
             # to make sure the user is in charge of this.
-            mysqladmin $sqloptionsroot password "${snmysqlrootpass}" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+            #ORI_20220607 mysqladmin $sqloptionsroot password "${snmysqlrootpass}" >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+            #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+            mysqladmin $sqloptionsroot password "${snmysqlrootpass}" $sqloptionsexternal >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+            #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
         fi
-        snmysqlstoragepass=$(mysql -s $sqloptionsroot --password="${snmysqlrootpass}" --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+        #ORI_20220607 snmysqlstoragepass=$(mysql -s $sqloptionsroot --password="${snmysqlrootpass}" --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+        snmysqlstoragepass=$(mysql -s $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     else
-        snmysqlstoragepass=$(mysql $sqloptionsuser --password="${snmysqlpass}" --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+        #ORI_20220607 snmysqlstoragepass=$(mysql $sqloptionsuser --password="${snmysqlpass}" --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+        snmysqlstoragepass=$(mysql $sqloptionsuser --password="${snmysqlpass}" $sqloptionsexternal --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     fi
-    mysql $sqloptionsuser --password="${snmysqlpass}" --execute="quit" >/dev/null 2>&1
+    #ORI_20220607 mysql $sqloptionsuser --password="${snmysqlpass}" --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    mysql $sqloptionsuser --password="${snmysqlpass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     connect_as_fogmaster=$?
-    mysql ${host} -s --user=fogstorage --password="${snmysqlstoragepass}" --execute="quit" >/dev/null 2>&1
+    #ORI_20220607 mysql ${host} -s --user=fogstorage --password="${snmysqlstoragepass}" --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    mysql ${host} -s --user=fogstorage --password="${snmysqlstoragepass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     connect_as_fogstorage=$?
     if [[ $connect_as_fogmaster -eq 0 && $connect_as_fogstorage -eq 0 ]]; then
         echo "Skipped"
@@ -1212,12 +1335,18 @@ configureMySql() {
         read -rs snmysqlrootpass
         echo
         echo
-        mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+        #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+        mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+        #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
         if [[ $? -ne 0 ]]; then
             echo "   Unable to connect to the database using the given password!"
             echo -n "   Try again: "
             read -rs snmysqlrootpass
-            mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+            #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" --execute="quit" >/dev/null 2>&1
+            #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+            mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="quit" >/dev/null 2>&1
+            #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
             if [[ $? -ne 0 ]]; then
                 echo
                 echo "   Failed! Terminating installer now."
@@ -1226,7 +1355,10 @@ configureMySql() {
         fi
     fi
 
-    snmysqlstoragepass=$(mysql -s $sqloptionsroot --password="${snmysqlrootpass}" --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+    #ORI_20220607 snmysqlstoragepass=$(mysql -s $sqloptionsroot --password="${snmysqlrootpass}" --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    snmysqlstoragepass=$(mysql -s $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal --execute="SELECT settingValue FROM globalSettings WHERE settingKey LIKE '%FOG_STORAGENODE_MYSQLPASS%'" $mysqldbname 2>/dev/null | tail -1)
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
     # generate a new fogstorage password if it doesn't exist yet or if it's old style fs0123456789
     if [[ -z $snmysqlstoragepass ]]; then
         snmysqlstoragepass=$(generatePassword 20)
@@ -1284,8 +1416,19 @@ DROP PROCEDURE IF EXISTS $mysqldbname.create_user_if_not_exists ;
 FLUSH PRIVILEGES ;
 SET SQL_MODE=@OLD_SQL_MODE ;
 EOF
-    mysql $sqloptionsroot --password="${snmysqlrootpass}" <../tmp/fog-db-and-user-setup.sql >>$workingdir/error_logs/fog_error_${version}.log 2>&1
-    errorStat $?
+
+    #ORI_20220607 mysql $sqloptionsroot --password="${snmysqlrootpass}" <../tmp/fog-db-and-user-setup.sql >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+    #ORI_20220607 errorStat $?
+
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 START
+    if [[ $snmysqlexternal != "DBAAS" ]]; then
+        mysql $sqloptionsroot --password="${snmysqlrootpass}" $sqloptionsexternal <../tmp/fog-db-and-user-setup.sql >>$workingdir/error_logs/fog_error_${version}.log 2>&1
+        errorStat $?
+    else
+        echo "Skipped (DBAAS)"
+        return
+    fi
+    #CES_CUSTOMIZATION_EXTERNAL_DB 20220607 END
 }
 configureFOGService() {
     [[ ! -d $servicedst ]] && mkdir -p $servicedst >>$workingdir/error_logs/fog_error_${version}.log 2>&1
@@ -1510,7 +1653,7 @@ configureStorage() {
         echo "## Syntax of post download scripts are" >>"$storageLocation/postdownloadscripts/fog.postdownload"
         echo "#. \${postdownpath}<SCRIPTNAME>" >> "$storageLocation/postdownloadscripts/fog.postdownload"
         echo ". \${postdownpath}/fog.renamehost" >> "$storageLocation/postdownloadscripts/fog.postdownload"
-        cp fog.renamehost $storageLocation/postdownloadscripts/fog.renamehost		
+        cp fog.renamehost $storageLocation/postdownloadscripts/fog.renamehost
     fi
     [[ ! -d $storageLocationCapture ]] && mkdir $storageLocationCapture >>$workingdir/error_logs/fog_error_${version}.log 2>&1
     [[ ! -f $storageLocationCapture/.mntcheck ]] && touch $storageLocationCapture/.mntcheck >>$workingdir/error_logs/fog_error_${version}.log 2>&1
@@ -1556,13 +1699,13 @@ writeUpdateFile() {
     sedescsnmysqlpass=$(echo "$escsnmysqlpass" | sed -e 's/[\&/]/\\&/g')  # then prefix every \ & and / with \ for sed escaping
     escsnmysqlhost=$(echo $snmysqlhost | sed -e $replace)
     escmysqldbname=$(echo $mysqldbname | sed -e $replace)
-	#CES_CUSTOMIZATION 20220527
+	#CES_CUSTOMIZATION_EXTERNAL_DB 20220527
     escsnmysqlrootuser=$(echo $snmysqlrootuser | sed -e $replace)
     escsnmysqlrootpass=$(echo $snmysqlrootpass | sed -e $replace)
     escsnmysqlexternal=$(echo $snmysqlexternal | sed -e $replace)
     escsnmysqlport=$(echo $snmysqlport | sed -e $replace)
     escsnmysqlsslcapath=$(echo $snmysqlsslcapath | sed -e $replace)
-	#CES_CUSTOMIZATION 20220527			
+	#CES_CUSTOMIZATION_EXTERNAL_DB 20220527			
     escinstalllang=$(echo $installlang | sed -e $replace)
     escstorageLocation=$(echo $storageLocation | sed -e $replace)
     escfogupdateloaded=$(echo $fogupdateloaded | sed -e $replace)
@@ -1583,9 +1726,9 @@ writeUpdateFile() {
     escphp_verAdds=$(echo $php_verAdds | sed -e $replace)
     escsslprivkey=$(echo $sslprivkey | sed -e $replace)
     [[ -z $copybackold || $copybackold -lt 1 ]] && copybackold=0
-	#CES_CUSTOMIZATION 20220527	
+	#CES_CUSTOMIZATION_EXTERNAL_DB 20220527	
 	cp dbaas.pem $fogprogramdir/dbaas.pem
-	#CES_CUSTOMIZATION 20220527	
+	#CES_CUSTOMIZATION_EXTERNAL_DB 20220527	
     if [[ -f $fogprogramdir/.fogsettings ]]; then
         grep -q "^## Start of FOG Settings" $fogprogramdir/.fogsettings || grep -q "^## Version:.*" $fogprogramdir/.fogsettings
         if [[ $? == 0 ]]; then
@@ -1652,7 +1795,7 @@ writeUpdateFile() {
             grep -q "mysqldbname=" $fogprogramdir/.fogsettings && \
                 sed -i "s/mysqldbname=.*/mysqldbname='$escmysqldbname'/g" $fogprogramdir/.fogsettings || \
                 echo "mysqldbname='$mysqldbname'" >> $fogprogramdir/.fogsettings
-			#CES_CUSTOMIZATION 20220527
+			#CES_CUSTOMIZATION_EXTERNAL_DB 20220527
             grep -q "snmysqlrootuser=" $fogprogramdir/.fogsettings && \
                 sed -i "s/snmysqlrootuser=.*/snmysqlrootuser='$escsnmysqlrootuser'/g" $fogprogramdir/.fogsettings || \
                 echo "snmysqlrootuser='$snmysqlrootuser'" >> $fogprogramdir/.fogsettings     
@@ -1668,7 +1811,7 @@ writeUpdateFile() {
             grep -q "snmysqlsslcapath=" $fogprogramdir/.fogsettings && \
                 sed -i "s/snmysqlsslcapath=.*/snmysqlsslcapath='$escsnmysqlsslcapath'/g" $fogprogramdir/.fogsettings || \
                 echo "snmysqlsslcapath='$snmysqlsslcapath'" >> $fogprogramdir/.fogsettings
-			#CES_CUSTOMIZATION 20220527		
+			#CES_CUSTOMIZATION_EXTERNAL_DB 20220527		
             grep -q "installlang=" $fogprogramdir/.fogsettings && \
                 sed -i "s/installlang=.*/installlang='$escinstalllang'/g" $fogprogramdir/.fogsettings || \
                 echo "installlang='$installlang'" >> $fogprogramdir/.fogsettings
@@ -1760,13 +1903,13 @@ writeUpdateFile() {
             echo "snmysqlpass='$escsnmysqlpass'" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlhost='$snmysqlhost'" >> "$fogprogramdir/.fogsettings"
             echo "mysqldbname='$mysqldbname'" >> "$fogprogramdir/.fogsettings"
-			#CES_CUSTOMIZATION 20220527
+			#CES_CUSTOMIZATION_EXTERNAL_DB 20220527            
             echo "snmysqlrootuser=$snmysqlrootuser" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlrootpass=$snmysqlrootpass" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlexternal=$snmysqlexternal" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlport=$snmysqlport" >> "$fogprogramdir/.fogsettings"
             echo "snmysqlsslcapath=$snmysqlsslcapath" >> "$fogprogramdir/.fogsettings"
-			#CES_CUSTOMIZATION 20220527
+			#CES_CUSTOMIZATION_EXTERNAL_DB 20220527
             echo "installlang='$installlang'" >> "$fogprogramdir/.fogsettings"
             echo "storageLocation='$storageLocation'" >> "$fogprogramdir/.fogsettings"
             echo "fogupdateloaded=1" >> "$fogprogramdir/.fogsettings"
@@ -1815,13 +1958,13 @@ writeUpdateFile() {
         echo "snmysqlpass='$escsnmysqlpass'" >> "$fogprogramdir/.fogsettings"
         echo "snmysqlhost='$snmysqlhost'" >> "$fogprogramdir/.fogsettings"
         echo "mysqldbname='$mysqldbname'" >> "$fogprogramdir/.fogsettings"
-		#CES_CUSTOMIZATION 20220527
+		#CES_CUSTOMIZATION_EXTERNAL_DB 20220527        
         echo "snmysqlrootuser='$snmysqlrootuser'" >> "$fogprogramdir/.fogsettings"
         echo "snmysqlrootpass='$snmysqlrootpass'" >> "$fogprogramdir/.fogsettings"
         echo "snmysqlexternal='$snmysqlexternal'" >> "$fogprogramdir/.fogsettings"
 		echo "snmysqlport=''" >> "$fogprogramdir/.fogsettings"
 		echo "snmysqlsslcapath=''" >> "$fogprogramdir/.fogsettings"
-		#CES_CUSTOMIZATION 20220527
+		#CES_CUSTOMIZATION_EXTERNAL_DB 20220527
         echo "installlang='$installlang'" >> "$fogprogramdir/.fogsettings"
         echo "storageLocation='$storageLocation'" >> "$fogprogramdir/.fogsettings"
         echo "fogupdateloaded=1" >> "$fogprogramdir/.fogsettings"
@@ -2291,8 +2434,10 @@ class Config
         define('DATABASE_NAME', '$mysqldbname');
         define('DATABASE_USERNAME', '$snmysqluser');
         define('DATABASE_PASSWORD', '$phpescsnmysqlpass');
+        //CES_CUSTOMIZATION_EXTERNAL_DB 20220527
         define('DATABASE_PORT', '$snmysqlport');
         define('DATABASE_SSLCAPATH', '$snmysqlsslcapath');
+        //CES_CUSTOMIZATION_EXTERNAL_DB 20220527
     }
     /**
      * Defines the service settings

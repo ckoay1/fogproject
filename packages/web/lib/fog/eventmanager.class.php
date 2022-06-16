@@ -252,6 +252,18 @@ class EventManager extends FOGBase
             $RecursiveIteratorIterator,
             $RegexIterator
         );
+        
+        //CES_CUSTOMIZATION_20220611 to fix accesscontrol not working for plugins
+        //Re-arrange to move accesscontrol file will be loaded at the last item
+        foreach($files as $key => $val) {
+            if(stripos($val[0], 'accesscontrol') == true) {
+                $item = $files[$key];
+                unset($files[$key]);
+                array_push($files, $item);
+            }
+        }
+        //CES_CUSTOMIZATION_20220611 to fix accesscontrol not working for plugins
+
         // First pass we don't care about plugins, only based files
         $plugins = '?!';
         $tFiles = array_map($fileitems, (array) $files);
