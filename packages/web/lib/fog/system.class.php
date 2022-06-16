@@ -57,6 +57,6 @@ class System
         define('FOG_SCHEMA', 271);
         define('FOG_BCACHE_VER', 135);
         define('FOG_CLIENT_VERSION', '0.12.0');
-        define('FOG_VERSION_CES', '1.0.1');
+        define('FOG_VERSION_CES', '1.0.2');
     }
 }
